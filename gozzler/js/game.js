@@ -54,7 +54,7 @@ class IntroState {
       .addEventListener("click", this.boundHandlers.startGame);
 
     document
-      .querySelector("#help-icon")
+      .querySelector("#menu-icon")
       .addEventListener("click", () => this.showAbout());
   }
 
@@ -128,7 +128,7 @@ Try to do it in as few moves as possible and you will earn more stars.</p>
       .removeEventListener("click", this.boundHandlers.startGame);
 
     document
-      .querySelector("#help-icon")
+      .querySelector("#menu-icon")
       .removeEventListener("click", () => this.showAbout());
     document
       .querySelector(".exit-btn")

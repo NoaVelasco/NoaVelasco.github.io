@@ -18,7 +18,6 @@ export function ui(state, data = null) {
     // MARK: complete
     // creo bloques para reutilizar variables en cases diferentes:
     case "LevelCompleteState": {
-
       document.querySelector(
         ".status"
       ).textContent = `PHASE 3: Reach the goal!`;
@@ -173,7 +172,8 @@ export function ui(state, data = null) {
 
       return {
         retryButton: retryButton,
-        levelMenuButton: levelMenuButton,};
+        levelMenuButton: levelMenuButton,
+      };
     }
   }
   // <button class="modal-button restart-btn" id="restart">RESTART</button>
@@ -183,9 +183,12 @@ export function ui(state, data = null) {
   const uiDiv = document.createElement("div");
   uiDiv.id = "ui";
   const helpIcon = document.createElement("div");
-  helpIcon.id = "help-icon";
-  const mainH1 = document.createElement("h1");
-  mainH1.textContent = "🧱 : : GOZZLER : : 🦆";
+  helpIcon.id = "menu-icon";
+  helpIcon.textContent = "i";
+  // const mainH1 = document.createElement("h1");
+  // mainH1.textContent = "🧱 : : GOZZLER : : 🦆";
+  const mainH1 = document.createElement("div");
+  mainH1.innerHTML = "🧱 : : GOZZLER : : 🦆";
   uiDiv.appendChild(helpIcon);
   uiDiv.appendChild(mainH1);
   gameContainer.appendChild(uiDiv);
@@ -194,6 +197,10 @@ export function ui(state, data = null) {
     // MARK: intro
     case "IntroState":
       mainH1.classList.add("title");
+      mainH1.innerHTML = `
+        <div id="title">
+          <img src="./assets/ui/cover-img.png" alt="GOZZLER">
+        </div>`;
       const startButton = document.createElement("button");
       startButton.id = "play";
       startButton.textContent = "PLAY";
@@ -203,6 +210,10 @@ export function ui(state, data = null) {
     // MARK: select
     case "LevelSelectState":
       mainH1.classList.add("title");
+      mainH1.innerHTML = `
+        <div id="title">
+          <img src="./assets/ui/title-sm.png" alt="GOZZLER">
+        </div>`;
       const selectH2 = document.createElement("h2");
       selectH2.textContent = "SELECT A LEVEL";
       uiDiv.appendChild(selectH2);
@@ -210,6 +221,11 @@ export function ui(state, data = null) {
 
     // MARK: playing
     case "PlayingState": {
+      mainH1.classList.add("title");
+      mainH1.innerHTML = `
+        <div id="title">
+          <img src="./assets/ui/title-sm.png" alt="GOZZLER">
+        </div>`;
       const levelh2 = document.createElement("h2");
       levelh2.id = "nivel-num";
       uiDiv.appendChild(levelh2);
@@ -299,7 +315,6 @@ export function ui(state, data = null) {
       };
     }
   }
-
 }
 
 // console.log("UI Test loaded");

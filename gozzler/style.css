@@ -35,6 +35,55 @@ h1.title {
     font-size: 3em;
 }
 
+#title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* margin-bottom: 20px; */
+    position: relative;
+}
+
+#title img {
+    max-width: 100%;
+    height: auto;
+    position: relative;
+}
+
+#title-img {
+    max-width: 100%;
+    height: auto;
+    position: relative;
+}
+
+/* #cover-img {
+    position: absolute;
+    object-fit: cover;
+    border-radius: 20px;
+} */
+
+#cover-img {
+    position: absolute;
+    top: 250px;
+    width: 30%;
+    object-fit: cover;
+    z-index: 2;
+    transform: rotate(-20deg) rotateY(180deg);
+}
+
+/* #cover {
+    position:relative;
+    top: -230px;
+    max-height: 50%;
+    max-width: 50%;
+    height: 300px;
+    width: 300px;
+    transform:rotate(20deg);
+    transform: rotateY(180deg);
+    background-image: url("./assets/ui/gozzler-cover.png");
+    background-size: cover;
+    background-position: center;
+} */
+
 h1 {
     font-size: 1.5em;
     margin-bottom: 10px;
@@ -200,14 +249,42 @@ button#play,
 }
 
 #help-icon {
-    width: 50px;
-    height: 50px;
-    background-image: url('./assets/ui/4.png');
+    width: 42px;
+    height: 42px;
+    background-image: url('./assets/ui/Default_btn.png');
     background-size: cover;
     cursor: pointer;
     position: absolute;
     top: 20px;
-    right: 10px;
+    right: 20px;
+}
+
+#help-icon:hover {
+    background-image: url('./assets/ui/Hover_btn.png');
+}
+
+#menu-icon {
+    background-color:#c96721;
+    text-align: center;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    /* padding: 12px 20px; */
+    font-size: 24px;
+    font-weight: bold;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2);
+}
+
+#menu-icon:hover {
+    background-color:#FF9800;
 }
 
 .about {
@@ -521,13 +598,13 @@ button#play,
     box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2);
 }
 
-.retry-btn, 
+.retry-btn,
 .restart-btn {
     background-color: #3498db;
     color: white;
 }
 
-.retry-btn:hover, 
+.retry-btn:hover,
 .restart-btn:hover {
     background-color: #2980b9;
 }
