@@ -76,14 +76,7 @@ h2 {
     height: 40px;
 }
 
-/* #controls {
-    display: flex;
-    gap: 15px;
-    margin-bottom: 20px;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-around;
-} */
+
 #controls {
     display: grid;
     grid-template-columns: 1fr 2fr 12fr;
@@ -100,7 +93,7 @@ h2 {
 .direction-buttons {
     background-color: #eee7d2;
     border-radius: 30px;
-    background-image: url("assets/ui/arrows.png");
+    background-image: url("./assets/ui/arrows.png");
     background-position: center;
     height: 100px;
     width: 100px;
@@ -125,19 +118,19 @@ h2 {
 }
 
 .img-up {
-    background-image: url("/assets/ui/arriba.jpg");
+    background-image: url("./assets/ui/arriba.jpg");
 }
 
 .img-down {
-    background-image: url("/assets/ui/abajo.jpg");
+    background-image: url("./assets/ui/abajo.jpg");
 }
 
 .img-left {
-    background-image: url("/assets/ui/izquierda.jpg");
+    background-image: url("./assets/ui/izquierda.jpg");
 }
 
 .img-right {
-    background-image: url("/assets/ui/derecha.jpg");
+    background-image: url("./assets/ui/derecha.jpg");
 }
 
 button {
@@ -209,7 +202,7 @@ button#play,
 #help-icon {
     width: 50px;
     height: 50px;
-    background-image: url('/assets/ui/4.png');
+    background-image: url('./assets/ui/4.png');
     background-size: cover;
     cursor: pointer;
     position: absolute;
@@ -299,77 +292,61 @@ button#play,
 #gameboard {
     height: 600px;
     margin: 30px 0 0 0;
-    /* padding: 10px; */
     border-radius: 10px;
-    /* position: relative; */
-    /* overflow: hidden; */
-    background-image: url('/assets/tiles/sprite_tile001.png');
+    background-image: url('./assets/tiles/sprite_tile001.png');
     background-repeat: repeat;
     background-size: 32px 32px;
     display: flex;
     justify-content: center;
     align-items: center;
 
-    /* background: #a0c0c2; */
-    /* width: 100%;
-    display: grid;
-    justify-content: center;
-    grid-template-columns: repeat(8, 64px);
-    grid-template-rows: repeat(8, 64px);
-    background-color: darkgray; */
 }
 
 .wall {
-    background-image: url('/assets/tiles/block_02.png');
+    background-image: url('./assets/tiles/block_02.png');
     background-size: cover;
     background-color: #ad763e;
     z-index: 0;
 }
 
 .wall-int {
-    background-image: url('/assets/tiles/crate_05.png');
+    background-image: url('./assets/tiles/crate_05.png');
     background-size: cover;
     background-color: #ad763e;
 }
 
 .floor {
-    background-image: url('/assets/tiles/sprite_tile000.png');
+    background-image: url('./assets/tiles/sprite_tile000.png');
     background-size: cover;
     z-index: 0;
 }
 
 .floor-player {
-    background-image: url('/assets/tiles/ground_04.png');
+    background-image: url('./assets/tiles/ground_04.png');
     background-size: cover;
     z-index: 0;
 }
 
 .goal {
-    background-image: url('/assets/tiles/sprite_goal.png');
+    background-image: url('./assets/tiles/sprite_goal.png');
     background-size: cover;
     z-index: 6;
     position: absolute;
 }
 
 .gem {
-    background-image: url('/assets/tiles/sprite_item003.png');
+    background-image: url('./assets/tiles/sprite_item003.png');
     background-size: cover;
     z-index: 7;
 }
 
 #player {
-    /* background-color: red; */
-    background-image: url('/assets/chars/idle.gif');
+    background-image: url('./assets/chars/idle.gif');
     background-size: 200%;
     background-repeat: no-repeat;
     background-position: center;
     z-index: 10;
     position: relative;
-    /* background-color: #eee7d2; */
-    /*     width: 64px;
-    height: 64px; */
-    /* x: 0;
-    y: 0; */
 }
 
 .right {
@@ -380,36 +357,16 @@ button#play,
     transform: scaleX(-1);
 }
 
-/* 
-    #key {
-        background-image: url('key.png');
-        background-size: cover;
-        z-index: 3;
-        position: absolute;
-        width: 64px;
-        height: 64px;
-    }
-
-    #bowser {
-        background-image: url('pixelbowser.png');
-        background-size: cover;
-        z-index: 1;
-        position: absolute;
-        width: 64px;
-        height: 64px;
-        x: 0;
-        y: 0;
-    } */
 
 .move-item {
     display: inline-block;
     background: #16ac7d;
     color: white;
     padding: 5px 10px;
-    /* margin: 2px; */
     border-radius: 15px;
     font-size: 14px;
     font-weight: bold;
+    /* margin: 2px; */
 }
 
 .move-item.current {
