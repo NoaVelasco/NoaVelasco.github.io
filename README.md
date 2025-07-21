@@ -1,6 +1,6 @@
 # NoaVelasco.github.io
 
-> **Notas 250710**
+> **Notas 250721**  
 > Actualmente, la página principal solo muestra enlaces a LinkedIn y Github. Está previsto incluir un portfolio más detallado, pero de momento el repositorio está pensado especialmente para alojar el juego en desarrollo.
 
 ## Gozzler

@@ -247,7 +247,8 @@ const GameplayEvents = {
 class GameplayStateMachine {
   constructor(parentFSM) {
     this.parentFSM = parentFSM;
-    this.currentState = null;
+    // Por emular la lógica de la FSM Global, antes había un currentState
+    // que se usaba igual que currentStateName.
     this.currentStateName = null;
     this.isActive = false; // IMPORTANTE: Controla si la FSM está activa
   }
@@ -276,26 +277,24 @@ class GameplayStateMachine {
   stop() {
     console.log(`  Gameplay terminado desde estado: ${this.currentStateName}`);
     this.isActive = false;
-    this.currentState = null;
     this.currentStateName = null;
   }
 
   changeState(newStateName) {
-    if (!this.isActive) return; // No procesar si está pausada
+    if (!this.isActive) return;
 
     console.log(
       `  Gameplay: ${this.currentStateName || "null"} → ${newStateName}`
     );
     this.currentStateName = newStateName;
-    this.currentState = newStateName;
 
     this.handleGameplayState();
   }
 
   handleGameplayState() {
-    if (!this.isActive) return; // No procesar si está pausada
+    if (!this.isActive) return;
 
-    switch (this.currentState) {
+    switch (this.currentStateName) { // Usar currentStateName en vez de currentState
       case GameplayStates.WAITING_INPUT:
         console.log("    Esperando input del jugador...");
         break;
@@ -328,7 +327,7 @@ class GameplayStateMachine {
     if (!this.isActive) return; // No procesar eventos si está pausada
 
     // Lógica de transiciones del gameplay
-    switch (this.currentState) {
+    switch (this.currentStateName) {
       case GameplayStates.WAITING_INPUT:
         if (event === GameplayEvents.INPUT_RECEIVED) {
           this.changeState(GameplayStates.ANIMATION);

@@ -13,14 +13,6 @@ body {
 MARK: Interfaz
  */
 
-#game-container {
-    background: rgb(111, 82, 38);
-    border-radius: 15px;
-    padding: 10px 30px 30px 30px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-    position: relative;
-}
-
 h1,
 h2 {
     font-family: 'Jost', Arial, sans-serif;
@@ -29,10 +21,24 @@ h2 {
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     letter-spacing: .2em;
 }
+h1 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+h2 {
+    font-size: 1.2em;
+    margin-bottom: 0;
+}
 
 h1.title {
     margin-bottom: 20px;
     font-size: 3em;
+}
+
+.bold {
+    color: #076e41;
+    font-weight: bold;
 }
 
 #title {
@@ -52,6 +58,14 @@ h1.title {
 #title-img {
     max-width: 100%;
     height: auto;
+    position: relative;
+}
+
+#game-container {
+    background: rgb(111, 82, 38);
+    border-radius: 15px;
+    padding: 10px 30px 30px 30px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
     position: relative;
 }
 
@@ -84,15 +98,6 @@ h1.title {
     background-position: center;
 } */
 
-h1 {
-    font-size: 1.5em;
-    margin-bottom: 10px;
-}
-
-h2 {
-    font-size: 1.2em;
-    margin-bottom: 0;
-}
 
 #ui {
     display: flex;
@@ -126,6 +131,10 @@ h2 {
 }
 
 
+
+/* 
+MARK: UI GAME
+ */
 #controls {
     display: grid;
     grid-template-columns: 1fr 2fr 12fr;
@@ -182,61 +191,6 @@ h2 {
     background-image: url("./assets/ui/derecha.jpg");
 }
 
-button {
-    padding: 10px 15px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: bold;
-    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5);
-    transition: all 0.3s ease;
-}
-
-button#play,
-#play-selected {
-    background: #1cb652;
-    color: rgb(0, 0, 0);
-    margin: 40px 0;
-    font-size: 24px;
-}
-
-.direction-btn {
-    background: #1cb652;
-    color: white;
-    /* min-width: 50px; */
-}
-
-.direction-btn:hover {
-    background: #45a049;
-    transform: translateY(-2px);
-}
-
-.direction-btn:disabled {
-    background: #ccc;
-    cursor: not-allowed;
-    transform: none;
-}
-
-.execute-btn {
-    background: #1bae31;
-    color: rgb(0, 0, 0);
-    font-size: 16px;
-}
-
-.execute-btn:hover {
-    background: #228d0f;
-}
-
-.reset-btn {
-    font-size: 16px;
-    background: #7dbc4d;
-    color: rgb(0, 0, 0);
-}
-
-.reset-btn:hover {
-    background: #076e41;
-}
-
 .info-panel {
     display: flex;
     flex-direction: column;
@@ -248,55 +202,10 @@ button#play,
     border-radius: 10px;
 }
 
-#help-icon {
-    width: 42px;
-    height: 42px;
-    background-image: url('./assets/ui/Default_btn.png');
-    background-size: cover;
-    cursor: pointer;
-    position: absolute;
-    top: 20px;
-    right: 20px;
-}
-
-#help-icon:hover {
-    background-image: url('./assets/ui/Hover_btn.png');
-}
-
-#menu-icon {
-    background-color:#c96721;
-    text-align: center;
-    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    width: 32px;
-    height: 32px;
-    cursor: pointer;
-    /* padding: 12px 20px; */
-    font-size: 24px;
-    font-weight: bold;
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2);
-}
-
-#menu-icon:hover {
-    background-color:#FF9800;
-}
-
 .about {
     text-align: justify;
-    font-size: 16px;
+    font-size: 14px;
 }
-
-.bold {
-    color: #076e41;
-    font-weight: bold;
-}
-
 
 #moves-display {
     font-size: 30px;
@@ -337,6 +246,11 @@ button#play,
     color: #c96721;
 }
 
+
+
+/* 
+    MARK: GAMEBOARD
+        */
 .playground {
     position: relative;
     /* text-align: center; */
@@ -361,10 +275,6 @@ button#play,
     justify-content: center;
     position: relative;
 }
-
-/* 
-    MARK: JUEGO
-        */
 
 #gameboard {
     height: 600px;
@@ -464,32 +374,11 @@ button#play,
     }
 }
 
-@media screen and (max-width: 768px) {
-    body {
-        font-size: 0.85em;
-        padding: 10px;
-    }
 
-    #game-container {
-        padding: 15px;
-    }
-
-    h1.main {
-        font-size: 2.2em;
-    }
-
-    #controls {
-        gap: 25px;
-    }
-
-    #gameboard {
-        height: 450px;
-    }
-}
 
 
 /* 
-    MARK: MODAL
+    MARK: MODALS
 */
 
 /* Estilos para el modal */
@@ -587,6 +476,112 @@ button#play,
     flex-wrap: wrap;
 }
 
+
+.no-more-levels {
+    color: #e67e22;
+    font-weight: bold;
+    margin: 15px 0;
+}
+
+/* 
+    MARK: BUTTONS 
+*/
+
+button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5);
+    transition: all 0.3s ease;
+}
+
+#help-icon {
+    width: 42px;
+    height: 42px;
+    background-image: url('./assets/ui/Default_btn.png');
+    background-size: cover;
+    cursor: pointer;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+#help-icon:hover {
+    background-image: url('./assets/ui/Hover_btn.png');
+}
+
+#menu-icon {
+    background-color: #c96721;
+    text-align: center;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    /* padding: 12px 20px; */
+    font-size: 24px;
+    font-weight: bold;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2);
+}
+
+#menu-icon:hover {
+    background-color: #FF9800;
+}
+
+
+button#play,
+#play-selected {
+    background: #1cb652;
+    color: rgb(0, 0, 0);
+    margin: 0 0 20px 0;
+    font-size: 18px;
+}
+
+.direction-btn {
+    background: #1cb652;
+    color: white;
+    /* min-width: 50px; */
+}
+
+.direction-btn:hover {
+    background: #45a049;
+    transform: translateY(-2px);
+}
+
+.direction-btn:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.execute-btn {
+    background: #1bae31;
+    color: rgb(0, 0, 0);
+    font-size: 16px;
+}
+
+.execute-btn:hover {
+    background: #228d0f;
+}
+
+.reset-btn {
+    font-size: 16px;
+    background: #7dbc4d;
+    color: rgb(0, 0, 0);
+}
+
+.reset-btn:hover {
+    background: #076e41;
+}
+
 .modal-button {
     padding: 12px 20px;
     font-size: 16px;
@@ -599,13 +594,15 @@ button#play,
 }
 
 .retry-btn,
-.restart-btn {
+.restart-btn,
+.info-btn {
     background-color: #3498db;
     color: white;
 }
 
 .retry-btn:hover,
-.restart-btn:hover {
+.restart-btn:hover,
+.info-btn:hover {
     background-color: #2980b9;
 }
 
@@ -637,8 +634,32 @@ button#play,
     background-color: #d35400;
 }
 
-.no-more-levels {
-    color: #e67e22;
-    font-weight: bold;
-    margin: 15px 0;
+
+
+
+/* 
+MARK: MEDIA QUERIES
+ */
+
+@media screen and (max-width: 768px) {
+    body {
+        font-size: 0.85em;
+        padding: 10px;
+    }
+
+    #game-container {
+        padding: 15px;
+    }
+
+    h1.main {
+        font-size: 2.2em;
+    }
+
+    #controls {
+        gap: 25px;
+    }
+
+    #gameboard {
+        height: 450px;
+    }
 }

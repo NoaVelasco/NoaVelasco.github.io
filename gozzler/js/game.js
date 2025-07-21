@@ -1,4 +1,4 @@
-import { ui } from "./ui.js";
+import { ui, createInfoModal } from "./ui.js";
 import { LevelManager } from "./levels.js";
 import * as gameplay from "./gameplay.js";
 import { GameplayEvents } from "./gameplay.js";
@@ -42,7 +42,7 @@ class IntroState {
   enter() {
     console.log("Mostrando pantalla de presentación");
 
-    let modal = ui("IntroState");
+    ui("IntroState");
 
     // Configurar listeners (guardando referencias para poder limpiarlos)
     this.boundHandlers.startGame = () => {
@@ -54,43 +54,17 @@ class IntroState {
       .addEventListener("click", this.boundHandlers.startGame);
 
     document
-      .querySelector("#menu-icon")
+      .querySelector("#how-to-play")
       .addEventListener("click", () => this.showAbout());
   }
 
   showAbout() {
-    const helpModal = document.createElement("div");
-    helpModal.className = "modal-overlay";
-    helpModal.innerHTML = `
-      <div class="modal-content">
-        <span class="modal-title">ABOUT GOZZLER</span>
-<h3>How to play</h3>
-<p class="about">In each level you have to reach the gem. To do this, think ahead
-and <span class="bold">press the direction buttons or keys</span> to create the sequence of movements.
-Once you have it ready, press the <span class="bold">MOVE</span> button or press
-<span class="bold">ENTER</span> to put Gozzler in motion.
-<br>
-But be careful, because Gozzler won't stop moving in every direction until he hits something.
-Only then will he stop for a moment and move on to the next direction until
-there are no more left. If the movement does not end on the gem,
-you have not passed the level.
-<br>
-Try to do it in as few moves as possible and you will earn more stars.</p>
+    let divModal = document.createElement("div");
 
-<hr>
-        <h3>Credits</h3>
-        <p><span class="bold">Author</span>: NOAVE</p>
-        <p><span class="bold">Assets</span>: <a href="https://www.kenney.nl/">KENNEY</a></p>
-
-<hr>
-
-        <div class="modal-buttons">
-          <button class="modal-button exit-btn" id="exit">EXIT</button>
-        </div>
-      </div>`;
+    const infoModal = createInfoModal(divModal);
     // helpModal.style.display = "none";
     // helpModal.style.display = "flex";
-    document.body.appendChild(helpModal);
+    document.body.appendChild(infoModal);
     document
       .querySelector(".exit-btn")
       ?.addEventListener("click", () => this.closeAbout());
@@ -128,7 +102,7 @@ Try to do it in as few moves as possible and you will earn more stars.</p>
       .removeEventListener("click", this.boundHandlers.startGame);
 
     document
-      .querySelector("#menu-icon")
+      .querySelector("#how-to-play")
       .removeEventListener("click", () => this.showAbout());
     document
       .querySelector(".exit-btn")
@@ -173,6 +147,32 @@ class LevelSelectState {
     document
       .querySelector("#play-selected")
       .addEventListener("click", this.boundHandlers.levelSelect);
+    document
+      .querySelector("#menu-icon")
+      .addEventListener("click", () => this.showAbout());
+  }
+
+  showAbout() {
+    let divModal = document.createElement("div");
+    const infoModal = createInfoModal(divModal);
+    // helpModal.style.display = "none";
+    // helpModal.style.display = "flex";
+    document.body.appendChild(infoModal);
+    document
+      .querySelector(".exit-btn")
+      ?.addEventListener("click", () => this.closeAbout());
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        this.closeAbout();
+      }
+    });
+  }
+
+  closeAbout() {
+    const helpModal = document.querySelector(".modal-overlay");
+    if (helpModal) {
+      helpModal.remove();
+    }
   }
 
   drawLevelSelection() {
@@ -214,6 +214,9 @@ class LevelSelectState {
     document
       .querySelector("#play-selected")
       .removeEventListener("click", this.boundHandlers.levelSelect);
+    document
+      .querySelector(".exit-btn")
+      ?.removeEventListener("click", () => this.closeAbout());
 
     // Limpiar referencias
     this.boundHandlers = {};
@@ -238,6 +241,8 @@ class PlayingState {
     this.board = null;
     this.player = null; // Referencia al jugador
     this.movesManager = null;
+    this._executingMovements = false; // Para controlar la ejecución de movimientos
+    this._showingAbout = false; // Para controlar si se está mostrando el modal de ayuda
     this.MOVE_TIME = 200;
   }
 
@@ -280,18 +285,24 @@ class PlayingState {
       this.fsm.gameplayFSM.start();
     }
 
-    console.log(`PlayingState.enter(): Común`);
+    console.log(`PlayingState.enter() with data: ${JSON.stringify(data)}`);
 
     // Configurar listeners específicos del gameplay
     this.boundHandlers.keydown = (e) => {
-      if (this._executingMovements && e.key !== "Escape") {
-        e.preventDefault();
-        return;
-      }
+      console.log(this._showingAbout);
 
-      if (e.key === "Escape") {
-        this.fsm.handleEvent(GameEvents.PAUSE_GAME);
-      } else if (this.fsm.gameplayFSM.getCurrentState() === "waitingInput") {
+      // if (this._showingAbout) {
+      //   if (e.key === "Escape") {
+      //     e.preventDefault();
+      //     this.closeAbout();
+      //   }
+      //   return; // Ignorar cualquier otra tecla mientras se muestra el modal
+      // }
+
+      if (
+        !this._showingAbout &&
+        this.fsm.gameplayFSM.getCurrentState() === "waitingInput"
+      ) {
         // Solo permitir entrada cuando estamos en estado de espera
         switch (e.key) {
           case "ArrowUp":
@@ -305,6 +316,9 @@ class PlayingState {
             break;
           case "ArrowRight":
             this.addMoveAndShow("RIGHT");
+            break;
+          case "Escape":
+            this.fsm.handleEvent(GameEvents.PAUSE_GAME);
             break;
           case "Enter":
             e.preventDefault(); // Prevenir comportamiento por defecto
@@ -351,6 +365,53 @@ class PlayingState {
     document
       .querySelector("#controls")
       ?.addEventListener("click", this.boundHandlers.buttonClick);
+    document.querySelector("#menu-icon").addEventListener("click", () => {
+      if (this.fsm.gameplayFSM.getCurrentState() === "waitingInput" &&
+          !this._showingAbout) {
+        this.showAbout();
+      }
+    });
+  }
+
+  showAbout() {
+    let divModal = document.createElement("div");
+    let infoModal = createInfoModal(divModal);
+    document.body.appendChild(infoModal);
+    this._showingAbout = true;
+
+    // Handler específico para cerrar el modal
+    this.boundHandlers.closeModalButton = () => {
+      this.closeAbout();
+    };
+
+    this.boundHandlers.escapeModal = (e) => {
+      if (e.key === "Escape" && this._showingAbout) {
+        e.preventDefault(); // Prevenir comportamiento por defecto
+        e.stopPropagation(); // Evitar que llegue al listener principal
+        this.closeAbout();
+      }
+    };
+
+    document
+      .querySelector(".exit-btn")
+      .addEventListener("click", this.boundHandlers.closeModalButton);
+
+    // Agregar listener temporal para Escape solo en el modal
+    document.addEventListener("keydown", this.boundHandlers.escapeModal);
+  }
+
+  closeAbout() {
+    const helpModal = document.querySelector(".modal-overlay");
+    if (helpModal) {
+      helpModal.remove();
+      this._showingAbout = false;
+    }
+    // Eliminar los event listeners específicos del modal
+    document
+      .querySelector(".exit-btn")
+      ?.removeEventListener("click", this.boundHandlers.closeModalButton);
+
+    document.removeEventListener("keydown", this.boundHandlers.escapeModal);
   }
 
   addMoveAndShow(direction) {
@@ -418,8 +479,6 @@ class PlayingState {
   }
 
   async executeMovements() {
-    // @FIXME ahora pierde el dato de usedMoves
-
     // Evitar múltiples ejecuciones simultáneas
     if (this._executingMovements) {
       console.warn("Ya hay movimientos ejecutándose");
@@ -564,6 +623,10 @@ class PlayingState {
     document
       .querySelector("#controls")
       ?.removeEventListener("click", this.boundHandlers.buttonClick);
+    document
+      .querySelector(".exit-btn")
+      ?.removeEventListener("click", () => this.closeAbout());
+
     this.boundHandlers = {};
   }
 }
@@ -573,7 +636,6 @@ class PlayingState {
 // // PAUSED STATE ---------------------------------------------------------
 // MARK: Pause
 
-// @FIXME Vuelve a pasar que recarga el mapa al reanudar desde pausa
 class PausedState {
   constructor(fsm) {
     this.fsm = fsm;
@@ -613,7 +675,7 @@ class PausedState {
       .querySelector(".resume-btn")
       ?.addEventListener("click", this.boundHandlers.resume);
     document
-      .querySelector(".exit-btn")
+      .querySelector(".level-menu-btn")
       ?.addEventListener("click", this.boundHandlers.backToMenu);
     document.addEventListener("keydown", this.boundHandlers.keydown);
   }
@@ -630,7 +692,7 @@ class PausedState {
       case GameEvents.BACK_TO_MENU:
         // Al volver al menú, terminar completamente el gameplay
         this.fsm.gameplayFSM.stop();
-        return GameStates.INTRO;
+        return GameStates.LEVEL_SELECT;
       default:
         return null;
     }
@@ -644,7 +706,7 @@ class PausedState {
       .querySelector(".resume-btn")
       ?.removeEventListener("click", this.boundHandlers.resume);
     document
-      .querySelector(".exit-btn")
+      .querySelector(".level-menu-btn")
       ?.removeEventListener("click", this.boundHandlers.backToMenu);
     document.removeEventListener("keydown", this.boundHandlers.keydown);
 
