@@ -21,6 +21,7 @@ h2 {
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     letter-spacing: .2em;
 }
+
 h1 {
     font-size: 1.5em;
     margin-bottom: 10px;
@@ -125,7 +126,7 @@ h1.title {
     font-size: 16px;
     width: 250px;
     border-radius: 8px;
-    margin-top: 20px;
+    margin: 20px;
     padding: 0 10px;
     height: 40px;
 }
@@ -254,7 +255,7 @@ MARK: UI GAME
 .playground {
     position: relative;
     /* text-align: center; */
-    background-color: rgb(112, 210, 221);
+    background-color: rgb(182, 122, 54);
     margin: 0 auto;
 
     /* width: 750px;
@@ -266,8 +267,8 @@ MARK: UI GAME
     top: 0;
     left: 0;
     z-index: 5;
-    width: 750px;
-    height: 600px;
+    /* width: 750px;
+    height: 600px; */
 }
 
 #board {
@@ -293,13 +294,28 @@ MARK: UI GAME
     background-image: url('./assets/tiles/block_02.png');
     background-size: cover;
     background-color: #ad763e;
+    position: absolute;
     z-index: 0;
 }
 
-.wall-int {
+.box {
     background-image: url('./assets/tiles/crate_05.png');
     background-size: cover;
     background-color: #ad763e;
+    position: absolute;
+}
+
+.brick {
+    background-image: url('./assets/tiles/block_01.png');
+    background-size: cover;
+    background-color: #ad763e;
+    position: absolute;
+}
+
+.breaking {
+    background-size: 50%;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 .floor {
@@ -311,13 +327,13 @@ MARK: UI GAME
 .floor-player {
     background-image: url('./assets/tiles/ground_04.png');
     background-size: cover;
-    z-index: 0;
+    z-index: 1;
 }
 
 .goal {
     background-image: url('./assets/tiles/sprite_goal.png');
     background-size: cover;
-    z-index: 6;
+    z-index: 1;
     position: absolute;
 }
 
@@ -497,7 +513,30 @@ button {
     transition: all 0.3s ease;
 }
 
-#help-icon {
+#pause-icon {
+    width: 32px;
+    height: 32px;
+    background-image: url('./assets/ui/Pause.png');
+    background-size: 40%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: #3498db;
+    cursor: pointer;
+    position: absolute;
+    padding: 0;
+    top: 20px;
+    right: 60px;
+    border: none;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2);
+}
+
+#pause-icon:hover {
+    background-color: #2980b9;
+}
+
+/* #help-icon {
     width: 42px;
     height: 42px;
     background-image: url('./assets/ui/Default_btn.png');
@@ -510,7 +549,7 @@ button {
 
 #help-icon:hover {
     background-image: url('./assets/ui/Hover_btn.png');
-}
+} */
 
 #menu-icon {
     background-color: #c96721;
@@ -562,6 +601,7 @@ button#play,
     transform: none;
 }
 
+/* 
 .execute-btn {
     background: #1bae31;
     color: rgb(0, 0, 0);
@@ -580,7 +620,7 @@ button#play,
 
 .reset-btn:hover {
     background: #076e41;
-}
+} */
 
 .modal-button {
     padding: 12px 20px;
@@ -595,26 +635,34 @@ button#play,
 
 .retry-btn,
 .restart-btn,
+.reset-btn,
 .info-btn {
-    background-color: #3498db;
+    /* background-color: #3498db; */
+    background-color: #0d66a2;
     color: white;
 }
 
 .retry-btn:hover,
 .restart-btn:hover,
+.reset-btn:hover,
 .info-btn:hover {
+    /* background-color: #2980b9; */
     background-color: #2980b9;
 }
 
 .next-level-btn,
+.execute-btn,
 .resume-btn {
-    background-color: #1cb652;
+    /* background-color: #1cb652; */
+    background-color: #169c45;
     color: white;
 }
 
 .next-level-btn:hover,
+.execute-btn:hover,
 .resume-btn:hover {
-    background-color: #169c45;
+    /* background-color: #169c45; */
+    background-color: #0d913b;
 }
 
 .next-level-btn:disabled,

@@ -236,6 +236,9 @@ export function ui(state, data = null) {
       //   <div id="title">
       //     <img src="./assets/ui/title-sm.png" alt="GOZZLER">
       //   </div>`;
+      const pauseIcon = document.createElement("button");
+      pauseIcon.id = "pause-icon";
+      uiDiv.appendChild(pauseIcon);
       const levelh2 = document.createElement("h2");
       levelh2.id = "nivel-num";
       uiDiv.appendChild(levelh2);
@@ -280,12 +283,12 @@ export function ui(state, data = null) {
       // Create reset button
       const resetBtn = document.createElement("button");
       resetBtn.classList.add("reset-btn");
-      resetBtn.textContent = "🔄 RESET";
+      resetBtn.textContent = "RESET";
 
       // Create execute button
       const executeBtn = document.createElement("button");
       executeBtn.classList.add("execute-btn");
-      executeBtn.textContent = "🚀 MOVE";
+      executeBtn.textContent = "MOVE";
 
       // Add buttons to container
       btnsGame.appendChild(resetBtn);

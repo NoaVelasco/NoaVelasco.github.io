@@ -233,6 +233,7 @@ class LevelSelectState {
 // PLAYING STATE ---------------------------------------------------------
 // PLAYING STATE ---------------------------------------------------------
 // MARK: Play
+// @nota Todavía ha veces que por alguna razón se queda pillado el _showingAbout en true.
 class PlayingState {
   constructor(fsm) {
     this.fsm = fsm;
@@ -241,7 +242,8 @@ class PlayingState {
     this.board = null;
     this.player = null; // Referencia al jugador
     this.movesManager = null;
-    this._executingMovements = false; // Para controlar la ejecución de movimientos
+    // @nota Creo que este atributo es innecesario si manejamos el estado de Gameplay "waitingInput".
+    // this._executingMovements = false; // Para controlar la ejecución de movimientos
     this._showingAbout = false; // Para controlar si se está mostrando el modal de ayuda
     this.MOVE_TIME = 200;
   }
@@ -270,7 +272,7 @@ class PlayingState {
       let dataUI = ui("PlayingState");
       // const statusInfo = document.getElementById("status-info");
 
-      dataUI.levelInfo.textContent = `Level ${this.currentLevel}`;
+      dataUI.levelInfo.textContent = `Level ${this.currentLevel} - ${levelManager.levelData.title}`;
       if (dataUI.statusInfo) {
         dataUI.statusInfo.innerHTML += `<span id="max-moves">[${levelManager.levelData.moves.max}]</span>`;
       }
@@ -283,6 +285,12 @@ class PlayingState {
 
       // Inicializar FSM de gameplay anidada
       this.fsm.gameplayFSM.start();
+
+      if (levelManager.levelData.message) {
+        let message = levelManager.levelData.message.text;
+        let type = levelManager.levelData.message.type || "info";
+        simpleNotification(message, type);
+      }
     }
 
     console.log(`PlayingState.enter() with data: ${JSON.stringify(data)}`);
@@ -322,9 +330,9 @@ class PlayingState {
             break;
           case "Enter":
             e.preventDefault(); // Prevenir comportamiento por defecto
-            if (!this._executingMovements) {
-              this.executeMovements();
-            }
+            // if (!this._executingMovements) {
+            this.executeMovements();
+            // }
             break;
           case " ": // Barra espaciadora
             this.fsm.handleEvent(GameEvents.PAUSE_GAME);
@@ -339,12 +347,9 @@ class PlayingState {
     };
 
     this.boundHandlers.buttonClick = (e) => {
-      if (!this.fsm.gameplayFSM.isActive) return;
-      if (this._executingMovements) return; // Ignorar clicks durante la ejecución de movimientos
-
-      const target = e.target;
-
       if (this.fsm.gameplayFSM.getCurrentState() === "waitingInput") {
+        const target = e.target;
+
         if (
           target.classList.contains("direction-btn") &&
           this.movesManager.getQueueLength() < this.movesManager.maxMoves
@@ -352,12 +357,15 @@ class PlayingState {
           this.addMoveAndShow(target.id);
         } else if (target.classList.contains("execute-btn")) {
           this.executeMovements();
+        } else if (target.classList.contains("reset-btn")) {
+          this.resetLevel();
         }
       }
+    };
 
-      // Botón de reinicio
-      if (target.classList.contains("reset-btn")) {
-        this.resetLevel();
+    this.boundHandlers.pauseClick = () => {
+      if (this.fsm.gameplayFSM.getCurrentState() === "waitingInput") {
+        this.fsm.handleEvent(GameEvents.PAUSE_GAME);
       }
     };
 
@@ -365,9 +373,15 @@ class PlayingState {
     document
       .querySelector("#controls")
       ?.addEventListener("click", this.boundHandlers.buttonClick);
+    document
+      .querySelector("#pause-icon")
+      ?.addEventListener("click", this.boundHandlers.pauseClick);
+
     document.querySelector("#menu-icon").addEventListener("click", () => {
-      if (this.fsm.gameplayFSM.getCurrentState() === "waitingInput" &&
-          !this._showingAbout) {
+      if (
+        this.fsm.gameplayFSM.getCurrentState() === "waitingInput" &&
+        !this._showingAbout
+      ) {
         this.showAbout();
       }
     });
@@ -478,21 +492,23 @@ class PlayingState {
     this.updateMovesCounter();
   }
 
+  // MARK: moves
   async executeMovements() {
     // Evitar múltiples ejecuciones simultáneas
-    if (this._executingMovements) {
-      console.warn("Ya hay movimientos ejecutándose");
-      return;
-    }
+    // if (this._executingMovements) {
+    //   console.warn("Ya hay movimientos ejecutándose");
+    //   return;
+    // }
 
     if (!this.movesManager.hasMoves()) {
       console.warn("No hay movimientos para ejecutar");
+      simpleNotification("There are no moves to execute.", "error");
       return;
     }
 
     try {
       // Marcar que estamos ejecutando movimientos
-      this._executingMovements = true;
+      // this._executingMovements = true;
 
       const statusInfo = document.getElementById("status-info");
       if (statusInfo) {
@@ -536,13 +552,13 @@ class PlayingState {
       this.fsm.gameplayFSM.handleEvent(GameplayEvents.ANIMATION_COMPLETE);
     } catch (error) {
       console.error("Error durante la ejecución de movimientos:", error);
-    } finally {
+      /* } finally {
       // Siempre limpiar el flag de ejecución al terminar
-      this._executingMovements = false;
+      this._executingMovements = false; */
     }
   }
 
-  async movePlayer(direction) {
+  /*   async movePlayer(direction) {
     // Verificar que direction es válido
     if (
       !direction ||
@@ -561,12 +577,71 @@ class PlayingState {
       await new Promise((resolve) => {
         setTimeout(() => {
           this.player.move(direction);
+
+          // Notificación al pasar por la meta sin TERMINAR
+          if (
+            this.player.getPosition().x === this.board.goalPosition.x &&
+            this.player.getPosition().y === this.board.goalPosition.y &&
+            !this.board.checkCollision({
+              x: this.player.getPosition().x + direction.x,
+              y: this.player.getPosition().y + direction.y,
+            })
+          ) {
+            simpleNotification(
+              "Uh… Almost there! But you must finish your movement JUST over the goal!",
+              "info"
+            );
+          }
           resolve();
         }, this.MOVE_TIME);
       });
 
       nextX = this.player.getPosition().x + direction.x;
       nextY = this.player.getPosition().y + direction.y;
+    }
+  } */
+  async movePlayer(direction) {
+    // Verificar que direction es válido
+    if (
+      !direction ||
+      typeof direction.x === "undefined" ||
+      typeof direction.y === "undefined"
+    ) {
+      console.error("Error: Dirección inválida en movePlayer:", direction);
+      return; // Salir temprano si la dirección no es válida
+    }
+
+    // Seguir moviendo mientras no haya colisión
+    while (
+      !this.board.checkInteractions(this.player.getPosition(), direction)
+    ) {
+      await new Promise((resolve) => {
+        setTimeout(() => {
+          this.player.move(direction);
+
+          resolve();
+        }, this.MOVE_TIME);
+      });
+      if (this.board.entityManager.activeEntities.length > 0) {
+        console.log(
+          `Interacting with ${this.board.entityManager.activeEntities.length} entities`
+        );
+
+        this.board.entityManager.activeEntities.forEach((entity) => {
+          entity.interact();
+        });
+        this.board.entityManager.updateActiveEntities();
+      }
+    }
+    if (this.board.entityManager.activeEntities.length > 0) {
+      console.log(
+        `Interacting with ${this.board.entityManager.activeEntities.length} entities`
+      );
+
+      this.board.entityManager.activeEntities.forEach((entity) => {
+        entity.interact();
+      });
+      this.board.entityManager.updateActiveEntities();
     }
   }
 
@@ -592,11 +667,7 @@ class PlayingState {
     this.clearMovesDisplay();
     this.player.placeOnBoard();
     this.fsm.gameplayFSM.start();
-  }
-
-  update() {
-    // El motor de juego maneja toda la lógica de gameplay
-    // La FSM anidada maneja los estados internos
+    // this.board.reset();
   }
 
   handleInput(event) {
@@ -626,7 +697,9 @@ class PlayingState {
     document
       .querySelector(".exit-btn")
       ?.removeEventListener("click", () => this.closeAbout());
-
+    document
+      .querySelector("#pause-icon")
+      ?.removeEventListener("click", this.boundHandlers.pauseClick);
     this.boundHandlers = {};
   }
 }
@@ -973,17 +1046,61 @@ class GameStateMachine {
 }
 
 // MARK: Funciones
-// E inicializar juego
+// Función simple alternativa (más básica)
+function simpleNotification(message, type = "info") {
+  const notification = document.createElement("div");
+  notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${
+                  type === "error"
+                    ? "#f44336"
+                    : type === "success"
+                    ? "#4CAF50"
+                    : "#2196F3"
+                };
+                color: white;
+                padding: 15px 20px;
+                border-radius: 8px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+                z-index: 10000;
+                font-size: 16px;
+                max-width: 300px;
+                opacity: 0;
+                transform: translateX(400px);
+                transition: all 0.3s ease;
+            `;
 
-// Ejemplo de uso
+  notification.textContent = message;
+  document.body.appendChild(notification);
+
+  // Animar entrada
+  requestAnimationFrame(() => {
+    notification.style.opacity = "1";
+    notification.style.transform = "translateX(0)";
+  });
+
+  let duration = message.length * 70;
+
+  // Auto-cerrar
+  setTimeout(
+    () => {
+      notification.style.opacity = "0";
+      notification.style.transform = "translateX(400px)";
+      setTimeout(() => notification.remove(), 300);
+    },
+    duration > 3000 ? duration : 3000
+  );
+}
+
+// ------------------------------------------------
 const fsm = new GameStateMachine();
 const levelManager = new LevelManager();
 
 // Inicializar
 fsm.start(); // → "Mostrando pantalla de presentación"
 
-// Simular flujo completo incluyendo pausa
-// fsm.handleEvent(GameEvents.START_GAME); // → "Mostrando selección de niveles"
-// fsm.handleEvent(GameEvents.LEVEL_SELECTED); // → "Iniciando gameplay"
-// fsm.handleEvent(GameEvents.START_GAME); // → "Mostrando selección de niveles"
-// fsm.handleEvent(GameEvents.LEVEL_SELECTED); // → "Iniciando gameplay"
+// Para empezar en un nivel concreto:
+fsm.handleEvent(GameEvents.START_GAME); // → "Mostrando selección de niveles"
+fsm.handleEvent(GameEvents.LEVEL_SELECTED, { level: 10 }); // → "Iniciando gameplay"
