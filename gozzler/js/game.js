@@ -1102,5 +1102,5 @@ const levelManager = new LevelManager();
 fsm.start(); // → "Mostrando pantalla de presentación"
 
 // Para empezar en un nivel concreto:
-fsm.handleEvent(GameEvents.START_GAME); // → "Mostrando selección de niveles"
-fsm.handleEvent(GameEvents.LEVEL_SELECTED, { level: 10 }); // → "Iniciando gameplay"
+// fsm.handleEvent(GameEvents.START_GAME); // → "Mostrando selección de niveles"
+// fsm.handleEvent(GameEvents.LEVEL_SELECTED, { level: 10 }); // → "Iniciando gameplay"
