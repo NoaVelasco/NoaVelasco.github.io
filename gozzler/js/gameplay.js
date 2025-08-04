@@ -1,488 +1,238 @@
+import { EventSystem, EntityEvents, MovementSystem } from "./systems.js";
+import { EntityFactory } from "./entities.js";
+
 // MARK:BOARD
+
 class Board {
+  #levelManager;
+  #entities = new Map(); // Mapa de entidades por ID
+  #grid1 = []; // Grid para acceso rápido por posición
+  #grid2 = []; // Grid para acceso rápido por posición
+  #movementSystem;
+  #events;
+  player;
+
   constructor(levelManager) {
-    this.lvlMng = levelManager;
-    this.level = levelManager.currentLevel;
-    this.cellSize = levelManager.levelData["size"]["cell"];
-    this.grid_x = levelManager.levelData["size"]["grid_x"];
-    this.grid_y = levelManager.levelData["size"]["grid_y"];
-    this.map = levelManager.levelData["map"];
-    this.entitiesMap = levelManager.levelData["entities"];
-    // this.playerPosition = { ...levelManager.levelData["player"] };
-    this.goalPosition = { ...levelManager.levelData["goal"] };
-    this.goalDOM = null;
-    this.gemDOM = null;
+    this.#levelManager = levelManager;
+    this.#events = EventSystem.getInstance();
 
-    this.entityManager = null;
-    // this.entityList = [];
-    // this.movingEntityList = [];
+    this.cellSize = levelManager.levelData.size.cell;
+    this.width = levelManager.levelData.size.grid_x;
+    this.height = levelManager.levelData.size.grid_y;
+    this.lvlFloorGrid = levelManager.levelData.floor_grid;
+    this.lvlEntitiesGrid = levelManager.levelData.entities_grid;
+    this.goalPosition = { ...levelManager.levelData.goal };
+
+    // Inicializar grid para búsqueda rápida de entidades
+    for (let y = 0; y < this.height; y++) {
+      this.#grid1[y] = [];
+      this.#grid2[y] = [];
+      for (let x = 0; x < this.width; x++) {
+        this.#grid1[y][x] = null;
+        this.#grid2[y][x] = null;
+      }
+    }
   }
+
   draw() {
-    // game-container
-    // -- gameboard
-    // ---- playground
-    // ------ entities
-    // ------ board
+    const entitiesDOM = document.getElementById("entities_grid");
+    entitiesDOM.style.width = `${this.width * this.cellSize}px`;
+    entitiesDOM.style.height = `${this.height * this.cellSize}px`;
 
-    this.entityManager = new EntityManager();
-    // this.entityList = [];
-    const playground = document.querySelector(".playground");
+    const boardDOM = document.getElementById("floor_grid");
+    boardDOM.style.gridTemplateColumns = `repeat(${this.width}, ${this.cellSize}px)`;
+    boardDOM.style.gridTemplateRows = `repeat(${this.height}, ${this.cellSize}px)`;
 
-    const entities = document.createElement("div");
-    entities.id = "entities";
-    entities.style.width = `${this.grid_x * this.cellSize}px`;
-    entities.style.height = `${this.grid_y * this.cellSize}px`;
+    // Crear entidades según el mapa
+    for (let y = 0; y < this.height; y++) {
+      for (let x = 0; x < this.width; x++) {
+        const floorType = this.getCellType(x, y, 1);
 
-    this.boardDOM = document.createElement("div");
-    this.boardDOM.id = "board";
-    this.boardDOM.style.gridTemplateColumns = `repeat(${this.grid_x}, ${this.cellSize}px)`;
-    this.boardDOM.style.gridTemplateRows = `repeat(${this.grid_y}, ${this.cellSize}px)`;
+        if (floorType) {
+          const floorEntity = EntityFactory.createEntityType(
+            floorType,
+            x,
+            y,
+            this.cellSize
+          );
+          if (floorEntity) {
+            this.addEntity(floorEntity, 1);
+          }
+        }
 
-    for (let y = 0; y < this.grid_y; y++) {
-      for (let x = 0; x < this.grid_x; x++) {
-        const cellBrdNum = this.map[y][x];
-        const cellBrdType = this.lvlMng.boardSymbols[cellBrdNum];
-        const cellBrd = CellFactory.createCell(cellBrdType, { x, y });
-        const cellBrdElement = cellBrd.createDOMElement();
-        cellBrdElement.style.width = `${this.cellSize}px`;
-        cellBrdElement.style.height = `${this.cellSize}px`;
-        this.boardDOM.appendChild(cellBrdElement);
+        // Crear entidad según el tipo de celda
+        const entityType = this.getCellType(x, y, 2);
+        if (entityType) {
+          const topEntity = EntityFactory.createEntityType(
+            entityType,
+            x,
+            y,
+            this.cellSize,
+            this
+          );
 
-        if (this.entitiesMap[y] && this.entitiesMap[y][x] !== 0) {
-          const cellEntNum = this.entitiesMap[y][x];
-          const cellEntType = this.lvlMng.entitySymbols[cellEntNum];
-          const cellEntity = CellFactory.createCell(cellEntType, { x, y });
-          const cellEntElement = cellEntity.createDOMElement();
-          cellEntElement.style.width = `${this.cellSize}px`;
-          cellEntElement.style.height = `${this.cellSize}px`;
-          cellEntElement.style.left = `${x * this.cellSize}px`;
-          cellEntElement.style.top = `${y * this.cellSize}px`;
-          entities.appendChild(cellEntElement);
-
-          // this.entityList.push(cellEntity);
-
-          this.entityManager.addEntity(cellEntity);
-          // Guardar referencia al DOM en la entidad para actualizaciones futuras
-          cellEntity.domElement = cellEntElement;
+          if (topEntity) {
+            this.addEntity(topEntity);
+          }
         }
       }
     }
 
-    this.goalDOM = document.createElement("div");
-    this.goalDOM.className = "goal";
-    this.goalDOM.style.width = `${this.cellSize}px`;
-    this.goalDOM.style.height = `${this.cellSize}px`;
-    this.goalDOM.style.left = `${this.goalPosition.x * this.cellSize}px`;
-    this.goalDOM.style.top = `${this.goalPosition.y * this.cellSize}px`;
-    this.gemDOM = document.createElement("div");
-    this.gemDOM.className = "gem";
-    this.gemDOM.style.width = `${this.cellSize}px`;
-    this.gemDOM.style.height = `${this.cellSize}px`;
-    this.gemDOM.style.left = `${this.goalPosition.x * this.cellSize}px`;
-    this.gemDOM.style.top = `${this.goalPosition.y * this.cellSize}px`;
+    // console.log(Entity.usedIds);
 
-    this.goalDOM.appendChild(this.gemDOM);
-    entities.appendChild(this.goalDOM);
-    playground.appendChild(entities);
-    playground.appendChild(this.boardDOM);
-  }
-  reset() {
-    // Limpiar el tablero y las entidades
-    this.boardDOM.innerHTML = "";
-    // this.entityList = [];
-    this.entityManager = new EntityManager();
-    this.draw();
-  }
-
-  checkInteractions(position, direction) {
-    const x = position.x + direction.x;
-    const y = position.y + direction.y;
-    if (x < 0 || x >= this.grid_x || y < 0 || y >= this.grid_y) {
-      return true; // Fuera de los límites del tablero
-    }
-
-    console.log("buscando entidad en: x: " + x + ", y: " + y);
-    
-    // Obtener entidad en esa posición
-    const entity = this.entityManager.getEntityAt(x, y);
-
-    // Si no hay entidad, no hay colisión
-    if (!entity) {
-      console.log("No hay entidad en la posición: x: " + x + ", y: " + y);
-      return false;
-    }
-    // Si hay una entidad, verificar si es caminable
-    if (entity.isWalkable()) return false;
-
-    if (entity.isBreakable()) {
-      entity.activate();
-      this.entityManager.entityActivated(entity);
-    } else if (entity.isMovable()) {
-      entity.activate(direction);
-    }
-    return true;
-  }
-
-  getCellType(x, y) {
-    if (x < 0 || x >= this.grid_x || y < 0 || y >= this.grid_y) {
-      return null; // Fuera de los límites del tablero
-    }
-    const cellType = this.entitiesMap[y][x];
-    if (cellType === undefined) {
-      return null; // Celda no definida
-    }
-    return this.lvlMng.symbols[cellType];
-  }
-
-  getCell(x, y) {
-    if (x < 0 || x >= this.grid_x || y < 0 || y >= this.grid_y) {
-      return null; // Fuera de los límites del tablero
-    }
-
-    const findCell = this.entityList.find(
-      (cell) => cell.position.x === x && cell.position.y === y
+    // Crear meta/objetivo
+    const goal = EntityFactory.createGoal(
+      this.goalPosition.x,
+      this.goalPosition.y,
+      this.cellSize,
+      this
     );
-    return findCell || null; // Retorna la celda si existe, o null si no
+    this.addEntity(goal);
+
+    // Crear jugador
+    this.player = EntityFactory.createPlayer(
+      this.#levelManager.levelData.player.x,
+      this.#levelManager.levelData.player.y,
+      this.cellSize,
+      this.#levelManager.levelData.player.flipX,
+      this
+    );
+    this.addEntity(this.player);
+    console.log("Jugador creado:", this.player);
+    console.log(typeof this.player);
+
+    // const counter = EntityFactory.createCounter();
+    // this.addEntity(counter);
+
+    // Inicializar todas las entidades
+    this.#entities.forEach((entity) => entity.init());
+    this.#movementSystem = new MovementSystem(this);
   }
 
-  checkCollision(position) {
-    const cell = this.getCell(position.x, position.y);
-    if (cell === null) {
+  addEntity(entity, level = 2) {
+    // Guardar en el mapa de entidades
+    this.#entities.set(entity.id, entity);
+
+    // Si tiene posición, también guardarlo en el grid
+    if (entity.hasComponent("Position")) {
+      const pos = entity.getComponent("Position");
+      if (level === 1) {
+        this.#grid1[pos.y][pos.x] = entity;
+      } else {
+        this.#grid2[pos.y][pos.x] = entity;
+
+        // Suscribirse a los cambios de posición para actualizar el grid
+        this.#events.subscribe(EntityEvents.ENTITY_MOVED, (data) => {
+          if (data.entity === entity) {
+            // Actualizar grid
+            this.#grid2[data.prevPosition.y][data.prevPosition.x] = null;
+            this.#grid2[data.position.y][data.position.x] = entity;
+          }
+        });
+
+        // Suscribirse a la destrucción de la entidad para limpiar el grid
+        this.#events.subscribe(EntityEvents.ENTITY_DESTROYED, (data) => {
+          if (data.entity === entity && entity.hasComponent("Position")) {
+            const position = entity.getComponent("Position");
+            // Limpiar la posición en el grid
+            this.#grid2[position.y][position.x] = null;
+            console.log(`Entidad ${entity.id} eliminada del grid en (${position.x}, ${position.y})`);
+          }
+        });
+      }
+    }
+  }
+
+
+  getEntityAt(x, y, level = 2) {
+    if (x < 0 || x >= this.width || y < 0 || y >= this.height) {
+      return null;
+    }
+    switch (level) {
+      case 1:
+        return this.#grid1[y][x];
+      case 2:
+        return this.#grid2[y][x];
+      default:
+        return null;
+    }
+  }
+
+  getCellType(x, y, level) {
+    if (x < 0 || x >= this.width || y < 0 || y >= this.height) {
+      return null;
+    }
+
+    let cellType = null;
+    switch (level) {
+      case 1:
+        cellType = this.lvlFloorGrid[y][x];
+        if (cellType === undefined) {
+          return null;
+        }
+
+        return this.#levelManager.floorSymbols[cellType];
+      case 2:
+        cellType = this.lvlEntitiesGrid[y][x];
+        if (cellType === undefined) {
+          return null;
+        }
+
+        return this.#levelManager.entitySymbols[cellType];
+      default:
+        break;
+    }
+
+    return null;
+  }
+
+  getActiveEntities() {
+    return (Array.from(this.#entities.values()).filter(
+      (entity) => entity.isActive() && entity.id !== "player"
+    ));
+  }
+
+
+
+  isGoalAchieved() {
+    if (!this.player || !this.player.hasComponent("Position")) {
       return false;
     }
 
-    console.log("Se puede romper? " + cell.isBreakable());
-    console.log("Cuál es su ID? " + cell.id);
+    const playerPos = this.player.getComponent("Position");
 
-    if (cell.isBreakable()) {
-      // Si la celda es rompible, no hay colisión
-
-      // Find and remove the cell from entityList
-      const index = this.entityList.findIndex(
-        (entity) => entity.id === cell.id
-      );
-      if (index !== -1) {
-        this.entityList.splice(index, 1);
-      }
-
-      // Remove the cell's DOM element
-      const cellElement = document.getElementById(cell.id);
-      if (cellElement) {
-        cellElement.remove();
-      }
+    if (
+      playerPos.x === this.goalPosition.x &&
+      playerPos.y === this.goalPosition.y
+    ) {
+      return true;
     }
-
-    switch (cell.type) {
-      case "brick":
-      case "wall":
-      case "box": // Depende de lo que haga con las cajas
-      default:
-        return true; // hay colisión
-    }
-  }
-}
-
-// MARK: ENTITIES
-class EntityManager {
-  constructor() {
-    // Mapa de entidades usando coordenadas como clave: "x,y" -> entidad
-    this.entities = new Map();
-    // Lista separada de entidades para iterar fácilmente
-    this.activeEntities = [];
+    return false;
   }
 
-  // Añadir una entidad al gestor
-  addEntity(entity) {
-    console.log("entidad activa? "+ entity.isActive());
+  async startMovementSystem(moves) {
+    console.log(typeof this.player);
+
+    await this.#movementSystem.loop(moves);
+  }
+
+  reset() {
+    console.warn("Reiniciando el tablero...");
     
-    const key = `${entity.position.x},${entity.position.y}`;
-    this.entities.set(key, entity);
-    if (entity.isActive()) {
-      this.activeEntities.push(entity);
-    }
-    return entity;
-  }
+    // Eliminar todas las entidades
+    this.#entities.forEach((entity) => entity.destroy());
+    this.#entities.clear();
 
-  entityActivated(entity) {
-    this.activeEntities.push(entity);
-  }
-
-  entityDeactivated(entity) {
-    const index = this.activeEntities.indexOf(entity);
-    if (index !== -1) {
-      this.activeEntities.splice(index, 1);
-    }
-  }
-
-  updateActiveEntities() {
-    this.activeEntities.forEach((entity) => {
-      if (entity.toRemove) {
-        // Si la entidad está marcada para eliminar, la quitamos
-        this.removeEntity(entity);
+    // Reiniciar grid
+    for (let y = 0; y < this.height; y++) {
+      for (let x = 0; x < this.width; x++) {
+        this.#grid1[y][x] = null;
+        this.#grid2[y][x] = null;
       }
-    });
-  }
-
-
-  // @TODO Actualizar la posición de una entidad
-  updateEntityPosition(entity, oldPosition) {
-    // Eliminar la entidad de la posición antigua
-    const oldKey = `${oldPosition.x},${oldPosition.y}`;
-    this.entities.delete(oldKey);
-
-    // Añadir la entidad en la nueva posición
-    const newKey = `${entity.position.x},${entity.position.y}`;
-    this.entities.set(newKey, entity);
-  }
-
-  // Obtener entidad en una posición específica
-  getEntityAt(x, y) {
-    const key = `${x},${y}`;
-    return this.entities.get(key) || null;
-  }
-
-  // Remover una entidad completamente
-  removeEntity(entity) {
-    const key = `${entity.position.x},${entity.position.y}`;
-    this.entities.delete(key);
-
-    const index = this.activeEntities.indexOf(entity);
-    if (index !== -1) {
-      this.activeEntities.splice(index, 1);
     }
-  }
 
-  // Verificar colisión en una posición
-  checkCollision(x, y) {
-    const entity = this.getEntityAt(x, y);
-    return entity !== null;
-  }
-}
-
-// MARK: PLAYER
-class Player {
-  constructor(levelData) {
-    this.levelData = levelData;
-    this.initPosX = levelData.player.x;
-    this.initPosY = levelData.player.y;
-    this.initFlipX = levelData.player.flipX;
-    this.x = levelData.player.x;
-    this.y = levelData.player.y;
-    this.flipX = levelData.player.flipX; // true for left, false for right
-    this.size = levelData.size.cell; // Tamaño de la celda
-    this.container = null; // Contenedor del jugador en el DOM
-
-    this.direction = { x: 0, y: 0 }; // Dirección de movimiento
-  }
-
-  // Implemento movimiento del jugador en Game, que maneja las colisiones
-  move(direction) {
-    if (direction.x > 0) {
-      this.flipX = false; // derecha
-    } else if (direction.x < 0) {
-      this.flipX = true; // izquierda
-    }
-    this.container.className = this.flipX ? "left" : "right";
-    this.x += direction.x;
-    this.y += direction.y;
-    this.container.style.left = `${this.x * this.size}px`;
-    this.container.style.top = `${this.y * this.size}px`;
-    console.log(`(PLAYER) Jugador movido a: (${this.x}, ${this.y})`);
-  }
-
-  placeOnBoard() {
-    const existingPlayer = document.getElementById("player");
-    if (existingPlayer) {
-      existingPlayer.remove();
-    }
-    const entities = document.getElementById("entities");
-
-    this.container = document.createElement("div");
-    this.container.id = "player";
-
-    this.x = this.initPosX;
-    this.y = this.initPosY;
-
-    this.initFlipX
-      ? this.container.classList.add("left")
-      : this.container.classList.add("right");
-
-    this.container.style.width = `${this.size}px`;
-    this.container.style.height = `${this.size}px`;
-    this.container.style.left = `${this.initPosX * this.size}px`; // Posición X
-    this.container.style.top = `${this.initPosY * this.size}px`;
-    // this.container.style.transform = `translate(${this.x * this.size}px, ${this.y * this.size}px)`;
-    entities.appendChild(this.container);
-  }
-
-  getPosition() {
-    return { x: this.x, y: this.y };
-  }
-}
-
-// MARK: CELL
-class Cell {
-  /* 
-  Cada celda tiene un ID único, un tipo (floor, wall, brick, box, etc.) y una posición.
-  La posición es un objeto con coordenadas { x, y }.
-  La propiedad `count` es estática y se incrementa cada vez que se crea una nueva celda.
-  Si es interactiva, puede activarse o desactivarse (polimorfismo).
-  Si es activa, en cada movimiento se ejecuta su interacción.
-   */
-  static count = 0;
-  // @nota Puede terminar con cifras astronómicas después de resetear o cargar varios niveles.
-  constructor(type, position) {
-    this.id = `cell-${Cell.count++}`;
-    this.type = type;
-    this.position = position; // { x: number, y: number }
-
-    this.domElement = null;
-
-    this.walkable = false;
-    this.breakable = false;
-    this.movable = false;
-    this.lethal = false;
-    this.interactive = false;
-    this.active = false;
-    this.toRemove = false; 
-  }
-
-  createDOMElement() {
-    this.cellElement = document.createElement("div");
-    this.cellElement.className = this.type;
-    this.cellElement.id = this.id;
-    return this.cellElement;
-  }
-
-  isBreakable() {
-    return this.breakable;
-  }
-
-  isMovable() {
-    return this.movable;
-  }
-
-  isWalkable() {
-    return this.walkable;
-  }
-
-  isLethal() {
-    return this.lethal;
-  }
-
-  isInteractive() {
-    return this.interactive;
-  }
-
-  isActive() {
-    return this.active;
-  }
-}
-
-// MARK: CellFactory
-// Factory para crear diferentes tipos de celdas
-class CellFactory {
-  static createCell(type, position) {
-    switch (type) {
-      case "floor":
-      case "floor-player":
-        return new FloorCell(type, position);
-      case "wall":
-        return new WallCell(type, position);
-      case "brick":
-        return new BrickCell(type, position);
-      case "box":
-        return new BoxCell(type, position);
-      default:
-        return new Cell(type, position);
-    }
-  }
-}
-
-// Clases específicas para cada tipo de celda
-class FloorCell extends Cell {
-  constructor(type, position) {
-    super(type, position);
-    this.walkable = true;
-  }
-}
-
-class WallCell extends Cell {
-  constructor(type, position) {
-    super(type, position);
-  }
-}
-
-/* class BrickCell extends Cell {
-  constructor(type, position) {
-    super(type, position);
-    this.breakable = true;
-  }
-} */
-
-class BrickCell extends Cell {
-  constructor(type, position) {
-    super(type, position);
-    this.breakable = true;
-    this.interactive = true;
-    this.state = 1; // Estado inicial de la celda (2 = intacta, 1 = rompiendose, 0 = destruida)
-  }
-
-  activate() {
-    this.active = true;
-  }
-
-  deactivate() {
-    this.active = false;
-  }
-
-  interact() {
-    switch (this.state) {
-      case 2:
-        console.log("Interacción con celda de ladrillo: estado 2 → 1");
-        break;
-      case 1:
-        this.breakable = false; // Dejar de ser rompible
-        
-        this.cellElement.classList.add("breaking");
-        console.log("Interacción con celda de ladrillo: estado 1 → 0");
-        break;
-      case 0:
-        console.log("Interacción con celda de ladrillo: estado 0 → eliminado");
-        this.interactive = false;
-        this.deactivate();
-        this.toRemove = true; // Marcar para eliminar
-        this.cellElement.remove();
-        break;
-      default:
-        break;
-    }
-    this.state--;
-  }
-}
-
-class BoxCell extends Cell {
-  constructor(type, position) {
-    super(type, position);
-    this.movable = true;
-    this.direction = { x: 0, y: 0 };
-    this.interactive = true;
-  }
-
-  activate(direction) {
-    this.direction = direction;
-    this.active = true;
-    this;
-  }
-  deactivate() {
-    this.active = false;
-    this.direction = { x: 0, y: 0 };
-  }
-  interact() {
-    this.position.x += this.direction.x;
-    this.position.y += this.direction.y;
-    this.isMoving = false;
-    return this.position;
+    // Redibujar el tablero
+    // this.draw();
   }
 }
 
@@ -525,19 +275,6 @@ class MovesManager {
   getQueueLength() {
     return this.moveQueue.length;
   }
-
-  /*   getDirFromIndex(index) {
-    if (index < 0 || index >= this.moveQueue.length) {
-      console.error("Índice fuera de rango");
-      return null;
-    }
-    return this.moveQueue[index];
-  } */
-
-  // Ya veré si lo necesito
-  /*   getCurrentMove() {
-    return this.currentMove;
-  } */
 }
 
 // MARK: ESTADOS
@@ -563,8 +300,6 @@ const GameplayEvents = {
 class GameplayStateMachine {
   constructor(parentFSM) {
     this.parentFSM = parentFSM;
-    // Por emular la lógica de la FSM Global, antes había un currentState
-    // que se usaba igual que currentStateName.
     this.currentStateName = null;
     this.isActive = false; // IMPORTANTE: Controla si la FSM está activa
   }
@@ -610,9 +345,7 @@ class GameplayStateMachine {
   handleGameplayState() {
     if (!this.isActive) return;
 
-    switch (
-      this.currentStateName // Usar currentStateName en vez de currentState
-    ) {
+    switch (this.currentStateName) {
       case GameplayStates.WAITING_INPUT:
         console.log("    Esperando input del jugador...");
         break;
@@ -682,8 +415,6 @@ class GameplayStateMachine {
 
 export {
   Board,
-  Player,
-  Cell,
   MovesManager,
   GameplayStateMachine,
   GameplayStates,

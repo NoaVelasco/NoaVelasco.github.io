@@ -320,6 +320,14 @@ export function ui(state, data = null) {
       const playground = document.createElement("div");
       playground.classList.add("playground");
       gameboard.appendChild(playground);
+
+      const floorGrid = document.createElement("div");
+      floorGrid.id = "floor_grid";
+      const entitiesGrid = document.createElement("div");
+      entitiesGrid.id = "entities_grid";
+      playground.appendChild(floorGrid);
+      playground.appendChild(entitiesGrid);
+
       // cargar el tablero de juego y las entidades por otro lado
       return {
         levelInfo: levelh2,

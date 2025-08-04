@@ -70,11 +70,7 @@ h1.title {
     position: relative;
 }
 
-/* #cover-img {
-    position: absolute;
-    object-fit: cover;
-    border-radius: 20px;
-} */
+
 
 #cover-img {
     position: absolute;
@@ -84,20 +80,6 @@ h1.title {
     z-index: 2;
     transform: rotate(-20deg) rotateY(180deg);
 }
-
-/* #cover {
-    position:relative;
-    top: -230px;
-    max-height: 50%;
-    max-width: 50%;
-    height: 300px;
-    width: 300px;
-    transform:rotate(20deg);
-    transform: rotateY(180deg);
-    background-image: url("./assets/ui/gozzler-cover.png");
-    background-size: cover;
-    background-position: center;
-} */
 
 
 #ui {
@@ -262,7 +244,7 @@ MARK: UI GAME
     height: 600px; */
 }
 
-#entities {
+#entities_grid {
     position: absolute;
     top: 0;
     left: 0;
@@ -271,7 +253,7 @@ MARK: UI GAME
     height: 600px; */
 }
 
-#board {
+#floor_grid {
     display: grid;
     justify-content: center;
     position: relative;
@@ -290,6 +272,9 @@ MARK: UI GAME
 
 }
 
+/* 
+    MARK: Entities
+ */
 .wall {
     background-image: url('./assets/tiles/block_02.png');
     background-size: cover;
@@ -305,18 +290,32 @@ MARK: UI GAME
     position: absolute;
 }
 
-.brick {
+.brick_2 {
     background-image: url('./assets/tiles/block_01.png');
     background-size: cover;
     background-color: #ad763e;
+    filter: contrast(1.2);
+    position: absolute;
+}
+
+.brick_1 {
+    background-image: url('./assets/tiles/block_03.png');
+    background-size: cover;
+    background-color: #ad763e;
+    filter: contrast(2);
+    border-radius: 5px;
     position: absolute;
 }
 
 .breaking {
-    background-size: 50%;
+    /* background-size: 85%; */
     background-repeat: no-repeat;
     background-position: center;
+    filter: blur(1px);
+    transform: scale(0.8);
+    transition: all 0.2s ease;
 }
+
 
 .floor {
     background-image: url('./assets/tiles/sprite_tile000.png');
@@ -324,7 +323,7 @@ MARK: UI GAME
     z-index: 0;
 }
 
-.floor-player {
+.floor_player {
     background-image: url('./assets/tiles/ground_04.png');
     background-size: cover;
     z-index: 1;
@@ -343,13 +342,31 @@ MARK: UI GAME
     z-index: 7;
 }
 
-#player {
+.player {
     background-image: url('./assets/chars/idle.gif');
     background-size: 200%;
     background-repeat: no-repeat;
     background-position: center;
     z-index: 10;
-    position: relative;
+    position: absolute;
+    transition: background-image 0.05s ease-out;
+}
+
+.rolling_x {
+    background-image: url('./assets/chars/roll_1.gif');
+}
+
+.rolling_y {
+    background-image: url('./assets/chars/roll_2.gif');
+}
+
+.wall_hit_x {
+    background-image: url('./assets/chars/wall_hit.gif');
+}
+
+.wall_hit_y {
+    background-image: url('./assets/chars/crouch.gif');
+    background-position: bottom;
 }
 
 .right {
@@ -536,20 +553,7 @@ button {
     background-color: #2980b9;
 }
 
-/* #help-icon {
-    width: 42px;
-    height: 42px;
-    background-image: url('./assets/ui/Default_btn.png');
-    background-size: cover;
-    cursor: pointer;
-    position: absolute;
-    top: 20px;
-    right: 20px;
-}
 
-#help-icon:hover {
-    background-image: url('./assets/ui/Hover_btn.png');
-} */
 
 #menu-icon {
     background-color: #c96721;
@@ -601,27 +605,6 @@ button#play,
     transform: none;
 }
 
-/* 
-.execute-btn {
-    background: #1bae31;
-    color: rgb(0, 0, 0);
-    font-size: 16px;
-}
-
-.execute-btn:hover {
-    background: #228d0f;
-}
-
-.reset-btn {
-    font-size: 16px;
-    background: #7dbc4d;
-    color: rgb(0, 0, 0);
-}
-
-.reset-btn:hover {
-    background: #076e41;
-} */
-
 .modal-button {
     padding: 12px 20px;
     font-size: 16px;
@@ -637,7 +620,6 @@ button#play,
 .restart-btn,
 .reset-btn,
 .info-btn {
-    /* background-color: #3498db; */
     background-color: #0d66a2;
     color: white;
 }
@@ -646,14 +628,12 @@ button#play,
 .restart-btn:hover,
 .reset-btn:hover,
 .info-btn:hover {
-    /* background-color: #2980b9; */
     background-color: #2980b9;
 }
 
 .next-level-btn,
 .execute-btn,
 .resume-btn {
-    /* background-color: #1cb652; */
     background-color: #169c45;
     color: white;
 }
@@ -661,7 +641,6 @@ button#play,
 .next-level-btn:hover,
 .execute-btn:hover,
 .resume-btn:hover {
-    /* background-color: #169c45; */
     background-color: #0d913b;
 }
 

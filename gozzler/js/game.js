@@ -82,10 +82,6 @@ class IntroState {
     }
   }
 
-  update() {
-    // Para DOM, esto puede estar vacío o manejar animaciones
-  }
-
   handleInput(event) {
     if (event === GameEvents.START_GAME) {
       return GameStates.LEVEL_SELECT;
@@ -233,17 +229,14 @@ class LevelSelectState {
 // PLAYING STATE ---------------------------------------------------------
 // PLAYING STATE ---------------------------------------------------------
 // MARK: Play
-// @nota Todavía ha veces que por alguna razón se queda pillado el _showingAbout en true.
+// @nota Vigilar que no se queda pillado el _showingAbout en true.
 class PlayingState {
   constructor(fsm) {
     this.fsm = fsm;
     this.boundHandlers = {};
     this.currentLevel = 1;
     this.board = null;
-    this.player = null; // Referencia al jugador
     this.movesManager = null;
-    // @nota Creo que este atributo es innecesario si manejamos el estado de Gameplay "waitingInput".
-    // this._executingMovements = false; // Para controlar la ejecución de movimientos
     this._showingAbout = false; // Para controlar si se está mostrando el modal de ayuda
     this.MOVE_TIME = 200;
   }
@@ -253,14 +246,19 @@ class PlayingState {
       console.log("PlayingState.enter(data.fromPause): Reanudando desde pausa");
       // this.fsm.gameplayFSM.resume();
     } else {
+        if (this.board) {
+          this.board.reset();
+        }
       if (data && data.level) {
+        // if (data.retry) {
+        //   this.board.reset();
+        // }
         console.log(
           `PlayingState.enter(data.level): Cargando nivel ${data.level}`
         );
         this.currentLevel = data.level;
         levelManager.loadLevel(this.currentLevel);
-        this.board = new gameplay.Board(levelManager);
-        this.player = new gameplay.Player(levelManager.levelData);
+
         this.movesManager = new gameplay.MovesManager(
           levelManager.levelData["moves"]
         );
@@ -268,17 +266,19 @@ class PlayingState {
           `Creado manager de movimientos con ${this.movesManager.maxMoves} movimientos máx.`
         );
       }
+
       // Mostrar UI de juego
       let dataUI = ui("PlayingState");
-      // const statusInfo = document.getElementById("status-info");
 
       dataUI.levelInfo.textContent = `Level ${this.currentLevel} - ${levelManager.levelData.title}`;
       if (dataUI.statusInfo) {
         dataUI.statusInfo.innerHTML += `<span id="max-moves">[${levelManager.levelData.moves.max}]</span>`;
       }
 
+      if (!data.retry) {
+        this.board = new gameplay.Board(levelManager);
+      }
       this.board.draw();
-      this.player.placeOnBoard();
 
       this.movesManager.clearQueue();
       this.clearMovesDisplay();
@@ -298,14 +298,6 @@ class PlayingState {
     // Configurar listeners específicos del gameplay
     this.boundHandlers.keydown = (e) => {
       console.log(this._showingAbout);
-
-      // if (this._showingAbout) {
-      //   if (e.key === "Escape") {
-      //     e.preventDefault();
-      //     this.closeAbout();
-      //   }
-      //   return; // Ignorar cualquier otra tecla mientras se muestra el modal
-      // }
 
       if (
         !this._showingAbout &&
@@ -469,7 +461,6 @@ class PlayingState {
       movesDisplay.appendChild(moveItem);
     }
 
-    // Actualizar contador de movimientos
     this.updateMovesCounter();
   }
 
@@ -493,13 +484,8 @@ class PlayingState {
   }
 
   // MARK: moves
-  async executeMovements() {
-    // Evitar múltiples ejecuciones simultáneas
-    // if (this._executingMovements) {
-    //   console.warn("Ya hay movimientos ejecutándose");
-    //   return;
-    // }
 
+  async executeMovements() {
     if (!this.movesManager.hasMoves()) {
       console.warn("No hay movimientos para ejecutar");
       simpleNotification("There are no moves to execute.", "error");
@@ -507,9 +493,6 @@ class PlayingState {
     }
 
     try {
-      // Marcar que estamos ejecutando movimientos
-      // this._executingMovements = true;
-
       const statusInfo = document.getElementById("status-info");
       if (statusInfo) {
         statusInfo.innerHTML = `<span class="status">PHASE 2: Crashing against the walls...</span>`;
@@ -524,150 +507,32 @@ class PlayingState {
       // Limpiamos la cola original para evitar ejecuciones duplicadas
       // Pero pasamos false para mantener usedMoves
       this.movesManager.clearQueue(false);
+      console.log("Ejecutando movimientos:", movesCopy);
 
-      for (const move of movesCopy) {
-        if (movesDisplay && movesDisplay.children[0]) {
-          movesDisplay.children[0].classList.add("current");
-        }
-
-        if (
-          !move ||
-          typeof move.x === "undefined" ||
-          typeof move.y === "undefined"
-        ) {
-          console.error("Error: Se encontró un movimiento inválido", move);
-          continue;
-        }
-
-        await this.movePlayer(move);
-        await new Promise((resolve) => setTimeout(resolve, this.MOVE_TIME * 2));
-
-        if (movesDisplay && movesDisplay.children[0]) {
-          movesDisplay.children[0].classList.remove("current");
-          movesDisplay.children[0].remove();
-        }
-      }
+      await this.board.startMovementSystem(movesCopy);
 
       console.log("Secuencia de movimientos ejecutada.");
       this.fsm.gameplayFSM.handleEvent(GameplayEvents.ANIMATION_COMPLETE);
     } catch (error) {
       console.error("Error durante la ejecución de movimientos:", error);
-      /* } finally {
-      // Siempre limpiar el flag de ejecución al terminar
-      this._executingMovements = false; */
-    }
-  }
-
-  /*   async movePlayer(direction) {
-    // Verificar que direction es válido
-    if (
-      !direction ||
-      typeof direction.x === "undefined" ||
-      typeof direction.y === "undefined"
-    ) {
-      console.error("Error: Dirección inválida en movePlayer:", direction);
-      return; // Salir temprano si la dirección no es válida
-    }
-
-    let nextX = this.player.getPosition().x + direction.x;
-    let nextY = this.player.getPosition().y + direction.y;
-
-    // Seguir moviendo mientras no haya colisión
-    while (!this.board.checkCollision({ x: nextX, y: nextY })) {
-      await new Promise((resolve) => {
-        setTimeout(() => {
-          this.player.move(direction);
-
-          // Notificación al pasar por la meta sin TERMINAR
-          if (
-            this.player.getPosition().x === this.board.goalPosition.x &&
-            this.player.getPosition().y === this.board.goalPosition.y &&
-            !this.board.checkCollision({
-              x: this.player.getPosition().x + direction.x,
-              y: this.player.getPosition().y + direction.y,
-            })
-          ) {
-            simpleNotification(
-              "Uh… Almost there! But you must finish your movement JUST over the goal!",
-              "info"
-            );
-          }
-          resolve();
-        }, this.MOVE_TIME);
-      });
-
-      nextX = this.player.getPosition().x + direction.x;
-      nextY = this.player.getPosition().y + direction.y;
-    }
-  } */
-  async movePlayer(direction) {
-    // Verificar que direction es válido
-    if (
-      !direction ||
-      typeof direction.x === "undefined" ||
-      typeof direction.y === "undefined"
-    ) {
-      console.error("Error: Dirección inválida en movePlayer:", direction);
-      return; // Salir temprano si la dirección no es válida
-    }
-
-    // Seguir moviendo mientras no haya colisión
-    while (
-      !this.board.checkInteractions(this.player.getPosition(), direction)
-    ) {
-      await new Promise((resolve) => {
-        setTimeout(() => {
-          this.player.move(direction);
-
-          resolve();
-        }, this.MOVE_TIME);
-      });
-      if (this.board.entityManager.activeEntities.length > 0) {
-        console.log(
-          `Interacting with ${this.board.entityManager.activeEntities.length} entities`
-        );
-
-        this.board.entityManager.activeEntities.forEach((entity) => {
-          entity.interact();
-        });
-        this.board.entityManager.updateActiveEntities();
-      }
-    }
-    if (this.board.entityManager.activeEntities.length > 0) {
-      console.log(
-        `Interacting with ${this.board.entityManager.activeEntities.length} entities`
-      );
-
-      this.board.entityManager.activeEntities.forEach((entity) => {
-        entity.interact();
-      });
-      this.board.entityManager.updateActiveEntities();
     }
   }
 
   checkWinCondition() {
-    const playerPos = this.player.getPosition();
-    const goalPos = this.board.goalPosition;
-
-    if (playerPos.x === goalPos.x && playerPos.y === goalPos.y) {
+    if (this.board.isGoalAchieved()) {
       console.log("¡Objetivo alcanzado!");
       this.fsm.gameplayFSM.handleEvent(GameplayEvents.GOAL_ACHIEVED);
-      // this.fsm.handleEvent(GameEvents.LEVEL_COMPLETED);
     } else {
       console.log("Objetivo no alcanzado, nivel fallido");
       this.fsm.gameplayFSM.handleEvent(GameplayEvents.FAILED);
-      // this.fsm.handleEvent(GameEvents.LEVEL_FAILED);
     }
   }
 
   resetLevel() {
     console.warn("Reseteando nivel");
-
     this.movesManager.clearQueue();
     this.clearMovesDisplay();
-    this.player.placeOnBoard();
     this.fsm.gameplayFSM.start();
-    // this.board.reset();
   }
 
   handleInput(event) {
@@ -685,6 +550,8 @@ class PlayingState {
 
   exit() {
     console.log("Pausando o terminando gameplay");
+
+    // this.board.reset();
 
     // Ocultar UI de juego
     // document.querySelector(".screen-playing").style.display = "none";
@@ -753,10 +620,6 @@ class PausedState {
     document.addEventListener("keydown", this.boundHandlers.keydown);
   }
 
-  update() {
-    // UI maneja el menú de pausa
-  }
-
   handleInput(event) {
     switch (event) {
       case GameEvents.RESUME_GAME:
@@ -821,7 +684,7 @@ class LevelCompleteState {
     });
     this.boundHandlers.retry = () => {
       console.log("Botón de retry pulsado");
-      this.fsm.handleEvent(GameEvents.RETRY_LEVEL);
+      this.fsm.handleEvent(GameEvents.RETRY_LEVEL, { retry: true });
     };
 
     this.boundHandlers.toNextLevel = () => {
@@ -845,10 +708,6 @@ class LevelCompleteState {
       "click",
       this.boundHandlers.backToMenu
     );
-  }
-
-  update() {
-    // UI maneja animaciones de victoria, puntuaciones, etc.
   }
 
   handleInput(event) {
@@ -910,7 +769,7 @@ class LevelFailState {
 
     this.boundHandlers.retry = () => {
       console.log("Botón de retry pulsado");
-      this.fsm.handleEvent(GameEvents.RETRY_LEVEL);
+      this.fsm.handleEvent(GameEvents.RETRY_LEVEL, { retry: true });
     };
 
     this.boundHandlers.backToMenu = () => {
@@ -923,10 +782,6 @@ class LevelFailState {
       "click",
       this.boundHandlers.backToMenu
     );
-  }
-
-  update() {
-    // UI maneja pantalla de derrota
   }
 
   handleInput(event) {
@@ -1009,13 +864,6 @@ class GameStateMachine {
     // Entrar al nuevo estado
     this.currentState.enter(data);
   }
-
-  // Actualizar el estado actual (llamado cada frame)
-  /*   update() {
-    if (this.currentState) {
-      this.currentState.update();
-    }
-  } */
 
   // Procesar un evento
   handleEvent(event, data = null) {
@@ -1102,5 +950,6 @@ const levelManager = new LevelManager();
 fsm.start(); // → "Mostrando pantalla de presentación"
 
 // Para empezar en un nivel concreto:
-// fsm.handleEvent(GameEvents.START_GAME); // → "Mostrando selección de niveles"
-// fsm.handleEvent(GameEvents.LEVEL_SELECTED, { level: 10 }); // → "Iniciando gameplay"
+/* fsm.handleEvent(GameEvents.START_GAME); // → "Mostrando selección de niveles"
+fsm.handleEvent(GameEvents.LEVEL_SELECTED, { level: 11 }); // → "Iniciando gameplay"
+ */
