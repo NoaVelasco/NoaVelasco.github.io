@@ -59,9 +59,9 @@ export const EntityEvents = {
   ENTITY_STOP_MOVING: "entityStopMoving",
   PLAYER_MOVED: "playerMoved",
   PLAYER_STOPPED: "playerStopped",
-  // PLAYER_MOVE_ATTEMPT: "playerMoveAttempt",
   LOOP_ENDED: "loopEnded",
   LOOP_CYCLE: "loopCycle",
+  // PLAYER_MOVE_ATTEMPT: "playerMoveAttempt",
   // GOAL_ACHIEVED: "goalAchieved",
 };
 
@@ -82,14 +82,12 @@ export class MovementSystem {
     this.movesDisplay = document.getElementById("moves-display");
   }
 
-
   async loop(movesCopy) {
     if (!this.#player) {
       console.error("Error: player no está definido en MovementSystem");
       return;
     }
 
-    
     let playableComponent = this.#player.getComponent("Playable");
     playableComponent.setMoveQueue(movesCopy);
     playableComponent.getNextMove();
@@ -101,7 +99,6 @@ export class MovementSystem {
     }
     // Inicializar estado del bucle
     this.#isLoopRunning = true;
-    // this.#loopStopped = false;
 
     const unsubscribeLoop = this.#events.subscribe(
       EntityEvents.LOOP_ENDED,
@@ -143,10 +140,11 @@ export class MovementSystem {
           // Si hay más movimientos, resaltar el siguiente
           if (this.movesDisplay.children[0]) {
             this.movesDisplay.children[0].classList.add("current");
-          } else {
+          }
+/*           else {
             this.#events.emit(EntityEvents.LOOP_ENDED);
             console.log("No hay más movimientos, finalizando bucle");
-          }
+          } */
         }
       }
     );
@@ -155,12 +153,11 @@ export class MovementSystem {
       console.log("Iniciando bucle de simulación");
 
       while (this.#isLoopRunning) {
-
         await this.#player.update();
 
         this.activeEntities = this.#board.getActiveEntities();
         for (const entity of this.activeEntities) {
-          entity.update();
+          await entity.update();
 
           // Si el bucle se detiene durante la actualización, salir
           // if (!this.#isLoopRunning) break;
@@ -170,7 +167,15 @@ export class MovementSystem {
           activeEntities: this.activeEntities,
         });
         await new Promise((resolve) => setTimeout(resolve, this.MOVE_TIME)); // ~60fps
+/*         if (!this.#player.isActive()) {
+          console.warn("El jugador ya no está activo, saliendo del bucle");
+          break;
+        } */
+          
       }
+      this.#events.emit(EntityEvents.LOOP_CYCLE, {
+        activeEntities: this.activeEntities,
+      });
       console.log("Bucle de simulación finalizado");
     } catch (error) {
       console.error("Error en el bucle de simulación:", error);
@@ -183,7 +188,7 @@ export class MovementSystem {
       unsubscribeDeactivated();
 
       this.#player.deactivate();
-      this.#board.getActiveEntities()?.forEach(entity => entity.deactivate());
+      this.#board.getActiveEntities()?.forEach((entity) => entity.deactivate());
 
       console.log("Bucle detenido y suscripciones limpiadas");
     }
@@ -195,6 +200,4 @@ export class MovementSystem {
       this.#isLoopRunning = false;
     }
   }
-
-
 }

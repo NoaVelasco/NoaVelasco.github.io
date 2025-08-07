@@ -7,6 +7,7 @@ export class Entity {
   #id;
   #components = new Map();
   #active = false;
+  #type = null;
 
   constructor(id) {
     if (id) {
@@ -29,6 +30,7 @@ export class Entity {
       this.#id = newId;
       Entity.#usedIds.add(newId);
     }
+    this.#type = id || "entity";
   }
 
   #generateUniqueId(id = "entity") {
@@ -40,6 +42,9 @@ export class Entity {
 
   get id() {
     return this.#id;
+  }
+  get type() {
+    return this.#type;
   }
 
   isActive() {
@@ -130,6 +135,8 @@ export class EntityFactory {
         return EntityFactory.createBox(type, x, y, cellSize, board);
       case "floor":
         return EntityFactory.createFloor(type, x, y, cellSize, board);
+      case "floor_slippery":
+        return EntityFactory.createFloor(type, x, y, cellSize, board);
       case "floor_player":
         return EntityFactory.createFloorPlayer(type, x, y, cellSize, board);
       default:
@@ -138,38 +145,45 @@ export class EntityFactory {
     }
   }
   static createWall(type, x, y, cellSize, board) {
-    return new Entity("wall")
+    return new Entity(type)
       .addComponent(new Position(x, y, board))
       .addComponent(new Renderer("wall", cellSize))
       .addComponent(new Collider({ solid: true }));
   }
 
   static createBrick2(type, x, y, cellSize, board, hitsToBreak) {
-    return new Entity("brick_2")
+    return new Entity(type)
       .addComponent(new Position(x, y, board))
-      .addComponent(new Renderer("brick_2", cellSize))
+      .addComponent(new Renderer(type, cellSize))
       .addComponent(new Collider({ solid: true, breakable: true }))
       .addComponent(new Breakable(hitsToBreak));
   }
   static createBrick1(type, x, y, cellSize, board, hitsToBreak) {
-    return new Entity("brick_1")
+    return new Entity(type)
       .addComponent(new Position(x, y, board))
-      .addComponent(new Renderer("brick_1", cellSize))
+      .addComponent(new Renderer(type, cellSize))
       .addComponent(new Collider({ solid: true, breakable: true }))
       .addComponent(new Breakable(hitsToBreak));
   }
 
   static createBox(type, x, y, cellSize, board) {
-    return new Entity("box")
+    return new Entity(type)
       .addComponent(new Position(x, y, board))
-      .addComponent(new Renderer("box", cellSize))
-      .addComponent(new Collider({ solid: true, pushable: true }));
+      .addComponent(new Renderer(type, cellSize))
+      .addComponent(new Collider({ solid: true, pushable: true }))
+      .addComponent(new Pushable());
   }
 
   static createFloor(type, x, y, cellSize) {
-    return new Entity("floor")
+    return new Entity(type)
       .addComponent(new Position(x, y))
-      .addComponent(new Renderer("floor", cellSize));
+      .addComponent(new Renderer(type, cellSize));
+  }
+
+  static createFloorSlippery(type, x, y, cellSize) {
+    return new Entity(type)
+      .addComponent(new Position(x, y))
+      .addComponent(new Renderer(type, cellSize));
   }
 
   static createFloorPlayer(type, x, y, cellSize) {
@@ -296,6 +310,9 @@ export class Position extends Component {
     this.#direction = value;
   }
 
+  get board() {
+    return this.#board;
+  }
   get isMoving() {
     return this.#moving;
   }
@@ -351,11 +368,11 @@ export class Position extends Component {
         direction: this.#direction,
       });
 
-      // @nota Estoy pensando en si Pasar esto a PLAYABLE
+      console.warn(
+        `   >>> Position: Moved ${this.entity.id} to (${this.#x}, ${this.#y})`
+      );
+
       if (this.entity.id === "player") {
-        console.warn(
-          `   >>> Position: Moved player to (${this.#x}, ${this.#y})`
-        );
         this.events.emit(EntityEvents.PLAYER_MOVED, {
           entity: this.entity,
           position: { x: this.#x, y: this.#y },
@@ -398,7 +415,7 @@ export class Position extends Component {
   }
 }
 
-// MARK: collider
+// MARK: collide
 export class Collider extends Component {
   // #breakable = false;
   // #movable = false;
@@ -449,6 +466,17 @@ export class Collider extends Component {
         direction: position.direction,
       });
 
+      if (other.getComponent("Pushable")) {
+        console.warn(
+          `   >>> Collider: Emitido evento ENTITY_PUSHED: ${other.id}`
+        );
+
+        this.events.emit(EntityEvents.ENTITY_PUSHED, {
+          entity: other,
+          fromEntity: this.entity,
+          direction: position.direction,
+        });
+      }
       if (this.entity.id === "player") {
         this.events.emit(EntityEvents.ENTITY_STOP_MOVING, {
           entity: this.entity,
@@ -482,17 +510,25 @@ export class Collider extends Component {
       this.entity.getComponent("Breakable").onImpact();
     } */
 
-    if (this.#pushable && other.hasComponent("Position")) {
+    /*     if (this.#pushable && other.hasComponent("Position")) {
       this.events.emit(EntityEvents.ENTITY_PUSHED, {
         entity: this.entity,
         other: other,
         direction: direction,
       });
+      console.warn(`   >>> Collider: Emitido evento ENTITY_PUSHED. Other: ${other.id}`);
+      
+    } */
+  }
+
+  onDestroy() {
+    if (this.unsubscribeCollided) {
+      this.unsubscribeCollided();
     }
   }
 }
 
-// MARK: renderer
+// MARK: render
 export class Renderer extends Component {
   #element;
   #cellSize;
@@ -737,7 +773,7 @@ export class DirectionalRenderer extends Component {
   }
 }
 
-// MARK: breakable
+// MARK: break
 
 export class Breakable extends Component {
   #hitsToBreak = null; // Número de golpes para romper
@@ -815,18 +851,118 @@ export class Breakable extends Component {
   }
 }
 
+// MARK: push
+export class Pushable extends Component {
+  #subscriptions = [];
+
+  init() {
+    this.unsubscribePushed = this.events.subscribe(
+      EntityEvents.ENTITY_PUSHED,
+      (data) => {
+        const position = this.entity.getComponent("Position");
+        if (!position) return; // Evitar errores si no hay posición
+
+        const next = position.board.getEntityAt(
+          position.x + data.direction.x,
+          position.y + data.direction.y,
+          2
+        );
+        if (
+          data.entity === this.entity &&
+          !(data.fromEntity.getComponent("Pushable") || next?.id === "goal")
+        ) {
+          this.entity.activate();
+          console.log(`Pushable: Activando entidad ${this.entity.id} por empuje`);
+
+          position.isMoving = true;
+          position.direction = data.direction;
+
+          // Suscribirse al ciclo para comprobar el suelo sólo cuando la entidad está activa
+          this.subscribeToCycle();
+        }
+      }
+    );
+
+    // También suscribirse a la desactivación para limpiar suscripciones
+    this.unsubscribeDeactivate = this.events.subscribe(
+      EntityEvents.ENTITY_DEACTIVATED,
+      (data) => {
+        if (data.entity === this.entity) {
+          this.clearCycleSubscriptions();
+        }
+      }
+    );
+  }
+
+  // Método separado para suscribirse al ciclo
+  subscribeToCycle() {
+    // Limpiar suscripciones previas para evitar duplicados
+    this.clearCycleSubscriptions();
+
+    const unsubscribe = this.events.subscribe(EntityEvents.LOOP_CYCLE, () => {
+      const position = this.entity.getComponent("Position");
+      // Validar que position existe y tiene board
+      if (!position || !position.board) {
+        console.log(`Pushable: No se encontró posición válida para ${this.entity.id}`);
+        this.clearCycleSubscriptions();
+        return;
+      }
+
+      try {
+        const entityFloor = position.board.getEntityAt(position.x, position.y, 1);
+
+        if (!entityFloor || entityFloor.type !== "floor_slippery") {
+          position.isMoving = false;
+          this.entity.deactivate();
+          this.clearCycleSubscriptions();
+          console.log(
+            `Pushable: Desactivando entidad ${this.entity.id} por falta de suelo resbaladizo`
+          );
+        }
+      } catch (error) {
+        console.error(`Error en Pushable.update para ${this.entity.id}:`, error);
+        this.clearCycleSubscriptions();
+      }
+    });
+
+    this.#subscriptions.push(unsubscribe);
+  }
+
+  // Método para limpiar todas las suscripciones al ciclo
+  clearCycleSubscriptions() {
+    while (this.#subscriptions.length > 0) {
+      const unsubscribe = this.#subscriptions.pop();
+      if (typeof unsubscribe === "function") {
+        unsubscribe();
+      }
+    }
+  }
+
+  // No necesitamos el método update() ya que ahora nos suscribimos al ciclo solo cuando es necesario
+
+  onDestroy() {
+    if (this.unsubscribePushed) {
+      this.unsubscribePushed();
+    }
+    if (this.unsubscribeDeactivate) {
+      this.unsubscribeDeactivate();
+    }
+    this.clearCycleSubscriptions();
+  }
+}
+
 // ------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------
 
-// MARK: playable
+// MARK: play
 export class Playable extends Component {
   #isPlayer = true;
-  // #isMoving = false;
-  // #delay = 1;
   #moveQueue = [];
   #currentDirection = { x: 0, y: 0 };
+  // #isMoving = false;
+  // #delay = 1;
   // #waitingForNextMove = false;
 
   constructor(isPlayer = true) {
@@ -846,9 +982,10 @@ export class Playable extends Component {
     );
   }
 
-  /*   isPlayer() {
+  get isPlayer() {
     return this.#isPlayer;
-  } */
+  }
+
   /*   isMoving() {
     return this.#isMoving;
   } */
@@ -881,6 +1018,7 @@ export class Playable extends Component {
       this.#currentDirection = { x: 0, y: 0 };
       const position = this.entity.getComponent("Position");
       position.isMoving = false;
+      this.entity.deactivate();
     }
   }
 

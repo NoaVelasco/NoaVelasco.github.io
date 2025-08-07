@@ -908,12 +908,12 @@ function simpleNotification(message, type = "info") {
                     ? "#4CAF50"
                     : "#2196F3"
                 };
-                color: white;
+                color: black;
                 padding: 15px 20px;
                 border-radius: 8px;
                 box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-                z-index: 10000;
-                font-size: 16px;
+                z-index: 100;
+                font-size: 20px;
                 max-width: 300px;
                 opacity: 0;
                 transform: translateX(400px);
@@ -951,5 +951,4 @@ fsm.start(); // → "Mostrando pantalla de presentación"
 
 // Para empezar en un nivel concreto:
 /* fsm.handleEvent(GameEvents.START_GAME); // → "Mostrando selección de niveles"
-fsm.handleEvent(GameEvents.LEVEL_SELECTED, { level: 11 }); // → "Iniciando gameplay"
- */
+fsm.handleEvent(GameEvents.LEVEL_SELECTED, { level: 14 }); // → "Iniciando gameplay" */

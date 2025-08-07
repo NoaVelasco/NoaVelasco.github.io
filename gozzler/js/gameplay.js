@@ -136,13 +136,14 @@ class Board {
             const position = entity.getComponent("Position");
             // Limpiar la posición en el grid
             this.#grid2[position.y][position.x] = null;
-            console.log(`Entidad ${entity.id} eliminada del grid en (${position.x}, ${position.y})`);
+            console.log(
+              `Entidad ${entity.id} eliminada del grid en (${position.x}, ${position.y})`
+            );
           }
         });
       }
     }
   }
-
 
   getEntityAt(x, y, level = 2) {
     if (x < 0 || x >= this.width || y < 0 || y >= this.height) {
@@ -170,15 +171,15 @@ class Board {
         if (cellType === undefined) {
           return null;
         }
-
         return this.#levelManager.floorSymbols[cellType];
+
       case 2:
         cellType = this.lvlEntitiesGrid[y][x];
         if (cellType === undefined) {
           return null;
         }
-
         return this.#levelManager.entitySymbols[cellType];
+
       default:
         break;
     }
@@ -187,12 +188,10 @@ class Board {
   }
 
   getActiveEntities() {
-    return (Array.from(this.#entities.values()).filter(
+    return Array.from(this.#entities.values()).filter(
       (entity) => entity.isActive() && entity.id !== "player"
-    ));
+    );
   }
-
-
 
   isGoalAchieved() {
     if (!this.player || !this.player.hasComponent("Position")) {
@@ -218,7 +217,7 @@ class Board {
 
   reset() {
     console.warn("Reiniciando el tablero...");
-    
+
     // Eliminar todas las entidades
     this.#entities.forEach((entity) => entity.destroy());
     this.#entities.clear();

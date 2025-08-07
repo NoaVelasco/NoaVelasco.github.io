@@ -280,7 +280,7 @@ MARK: UI GAME
     background-size: cover;
     background-color: #ad763e;
     position: absolute;
-    z-index: 0;
+    z-index: 2;
 }
 
 .box {
@@ -288,6 +288,7 @@ MARK: UI GAME
     background-size: cover;
     background-color: #ad763e;
     position: absolute;
+    z-index: 2;
 }
 
 .brick_2 {
@@ -296,6 +297,7 @@ MARK: UI GAME
     background-color: #ad763e;
     filter: contrast(1.2);
     position: absolute;
+    z-index: 2;
 }
 
 .brick_1 {
@@ -305,6 +307,7 @@ MARK: UI GAME
     filter: contrast(2);
     border-radius: 5px;
     position: absolute;
+    z-index: 2;
 }
 
 .breaking {
@@ -323,6 +326,13 @@ MARK: UI GAME
     z-index: 0;
 }
 
+.floor_slippery {
+    background-image: url('./assets/tiles/ground_06.png');
+    background-size: cover;
+    filter:brightness(0.8);
+    z-index: 0;
+}
+
 .floor_player {
     background-image: url('./assets/tiles/ground_04.png');
     background-size: cover;
@@ -334,6 +344,7 @@ MARK: UI GAME
     background-size: cover;
     z-index: 1;
     position: absolute;
+    z-index: 2;
 }
 
 .gem {
