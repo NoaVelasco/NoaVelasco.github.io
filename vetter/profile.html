@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mi perfil</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400..900;1,400..900&display=swap');
+  </style>
+</head>
+
+<body>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+      // Get all "navbar-burger" elements
+      const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+
+      // Add a click event on each of them
+      $navbarBurgers.forEach(el => {
+        el.addEventListener('click', () => {
+
+          // Get the target from the "data-target" attribute
+          const target = el.dataset.target;
+          const $target = document.getElementById(target);
+
+          // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
+          el.classList.toggle('is-active');
+          $target.classList.toggle('is-active');
+
+        });
+      });
+    });
+  </script>
+  <nav class="navbar is-primary is-fullwidth has-shadow" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+      <a class="navbar-item brand-menu tipo-bold" href="index.html">
+        VETTER
+      </a>
+
+      <a class="navbar-burger" role="button" aria-label="menu" aria-expanded="false" data-target="navMenu">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    </div>
+    <div class="navbar-menu" id="navMenu">
+      <!--       <div class="navbar-start">
+        <a class="navbar-item">
+          Contacto
+        </a>
+      </div> -->
+      <div class="navbar-end">
+        <div class="navbar-item">
+          <div class="buttons">
+            <a class="button is-small is-light" href="profile.html">
+              Salir
+            </a>
+            <!--             <a class="button is-small is-link" href="profile.html">
+              <strong>Entrar</strong>
+            </a> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+
+
+
+  <section class="section pt-4">
+    <div class="container">
+      <div class="columns is-variable is-8-desktop is-4-tablet is-2-mobile is-vcentered is-mobile">
+        <!-- Columna 1: Foto de perfil con marco circular -->
+        <div class="column is-2-desktop is-2-tablet is-3-mobile">
+          <figure class="image">
+            <img class="is-rounded profile-image-with-halo" src="src/alexey-demidov-1by1-I8NQe43R3kM-unsplash.jpg"
+              alt="Foto de perfil">
+          </figure>
+        </div>
+
+        <!-- Columna 2: Nombre y datos de contacto -->
+        <div class="column is-9-desktop is-8-tablet is-7-mobile">
+          <h1 class="title is-3 is-4-mobile is-5-mobile-xs mb-2">Anabel García de las Heras</h1>
+          <div class="content">
+            <p class="is-flex is-align-items-center mb-1">
+              <span class="icon is-small mr-1">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path
+                    d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
+                  </path>
+                </svg>
+              </span>
+              <span class="is-size-6 is-size-7-mobile">666 777 888</span>
+            </p>
+            <p class="is-flex is-align-items-center">
+              <span class="icon is-small mr-1">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                  <polyline points="22,6 12,13 2,6"></polyline>
+                </svg>
+              </span>
+              <span class="is-size-6 is-size-7-mobile truncate-mobile">ana.garcia@ejemplo.com</span>
+            </p>
+          </div>
+        </div>
+
+        <!-- Columna 3: Iconos de editar y compartir -->
+        <div class="column is-1-desktop is-2-tablet is-2-mobile has-text-right pr-2">
+          <div class="is-flex is-flex-direction-column is-align-items-flex-end is-justify-content-start">
+            <a class="icon has-text-primary mb-3" title="Editar perfil">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+              </svg>
+            </a>
+            <a class="icon has-text-link" title="Compartir perfil">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="18" cy="5" r="3"></circle>
+                <circle cx="6" cy="12" r="3"></circle>
+                <circle cx="18" cy="19" r="3"></circle>
+                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider-2">
+
+  <!-- 
+  MARK: Mascotas
+   -->
+  <section class="section bg-green-2">
+    <div class="container">
+      <h2 class="title is-2 has-text-left mb-5">Mis mascotas</h2>
+
+      <div class="columns is-multiline">
+        <!-- Tarjeta de mascota 1 -->
+        <div class="column is-4-desktop is-6-tablet">
+          <div class="card">
+            <div class="card-image">
+              <figure class="image">
+                <img src="src/Yin.jpg" alt="Foto de mascota">
+              </figure>
+            </div>
+            <div class="card-content">
+              <p class="title is-4">Yin</p>
+              <p class="subtitle is-6">Gato · Común europeo</p>
+              <div class="content">
+                <p>Próxima visita: <span class="has-text-weight-semibold">15 de octubre</span></p>
+                <div class="buttons">
+                  <a href="./animal_profile.html" class="button is-small is-primary">Ver perfil</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tarjeta de mascota 2 -->
+        <div class="column is-4-desktop is-6-tablet">
+          <div class="card">
+            <div class="card-image">
+              <figure class="image is-1by1">
+                <img src="src/mehdi-gholipour-1by1-oPwC8-CDXuI-unsplash.jpg" alt="Foto de mascota">
+              </figure>
+            </div>
+            <div class="card-content">
+              <p class="title is-4">Akuma</p>
+              <p class="subtitle is-6">Perro · Huskie siberiano</p>
+              <div class="content">
+                <p>Próxima vacuna: <span class="has-text-weight-semibold">3 de noviembre</span></p>
+                <div class="buttons">
+                  <a href="#" class="button is-small is-primary">Ver perfil</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tarjeta para añadir nueva mascota -->
+        <div class="column is-4-desktop is-6-tablet">
+          <div class="card ">
+            <div class="card-content has-text-centered" style="height: 100%;">
+              <div class="is-flex is-flex-direction-column is-justify-content-center is-align-items-center"
+                style="height: 300px;">
+                <span class="icon is-large mb-4">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="8" x2="12" y2="16"></line>
+                    <line x1="8" y1="12" x2="16" y2="12"></line>
+                  </svg>
+                </span>
+                <p class="title is-5">Añadir mascota</p>
+                <a href="#" class="button is-primary mt-4">Nueva mascota</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider-2">
+
+  <!-- 
+    MARK: Contactos
+     -->
+  <section class="section bg-primary-3">
+    <div class="container">
+      <h2 class="title is-2 has-text-left mb-5">Contactos</h2>
+
+      <div class="columns is-multiline">
+        <!-- Tarjeta 1 -->
+        <div class="column is-4-desktop is-6-tablet">
+          <div class="card">
+            <div class="card-image">
+              <figure class="image is-1by1">
+                <img src="src/ben-den-engelsen-1by1-YUu9UAcOKZ4-unsplash.jpg" alt="Foto de mascota">
+              </figure>
+            </div>
+            <div class="card-content">
+              <p class="title is-4">Jorge Martín</p>
+              <p class="subtitle is-6">Copropietario</p>
+              <div class="content">
+                <p class="is-flex is-align-items-center">
+                  <span class="icon is-small mr-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path
+                        d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
+                      </path>
+                    </svg>
+                  </span>
+                  <span class="is-size-6 is-size-7-mobile">678 901 234</span>
+                </p>
+                <div class="buttons">
+                  <a href="#" class="button is-small is-primary">Ver perfil</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tarjeta 2 -->
+        <div class="column is-4-desktop is-6-tablet">
+          <div class="card">
+            <div class="card-image">
+              <figure class="image is-1by1">
+                <img src="src/pexels-tima-miroshnichenko-1by1-6235233.jpg" alt="Foto de mascota">
+              </figure>
+            </div>
+            <div class="card-content">
+              <p class="title is-4">Clínica Patitas</p>
+              <p class="subtitle is-6">Veterinario</p>
+              <div class="content">
+                <p class="is-flex is-align-items-center mb-1">
+                  <span class="icon is-small mr-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path
+                        d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
+                      </path>
+                    </svg>
+                  </span>
+                  <span class="is-size-6 is-size-7-mobile">91 543 21 09</span>
+                </p>
+                <p class="is-flex is-align-items-center">
+                  <span class="icon is-small mr-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                      <polyline points="22,6 12,13 2,6"></polyline>
+                    </svg>
+                  </span>
+                  <span class="is-size-6 is-size-7-mobile truncate-mobile">patitas.vete@ejemplo.com</span>
+                </p>
+                <div class="buttons">
+                  <a href="#" class="button is-small is-primary">Ver perfil</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tarjeta para añadir -->
+        <div class="column is-4-desktop is-6-tablet">
+          <div class="card ">
+            <div class="card-content has-text-centered" style="height: 100%;">
+              <div class="is-flex is-flex-direction-column is-justify-content-center is-align-items-center"
+                style="height: 300px;">
+                <span class="icon is-large mb-4">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="8" x2="12" y2="16"></line>
+                    <line x1="8" y1="12" x2="16" y2="12"></line>
+                  </svg>
+                </span>
+                <p class="title is-5">Añadir contacto</p>
+                <a href="#" class="button is-primary mt-4">Nuevo contacto</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <hr class="section-divider-1">
+  <footer class="footer">
+    <div class="container">
+      <div class="has-text-centered">
+        <p class="title is-5 tipo-bold mb-4">VETTER</p>
+        <div class="mb-5">
+          <a href="about.html" class="mr-4">Sobre mí</a>
+          <a href="contact.html">Contacto</a>
+        </div>
+
+        <hr class="my-5">
+
+        <div class="columns is-centered">
+          <div class="column is-narrow">
+            <p class="has-text-grey-light mb-3">© 2025 Noa Velasco. Todos los derechos reservados.</p>
+            <div>
+              <a href="https://www.linkedin.com/in/noavelasco/" class="mr-3" aria-label="LinkedIn">
+                <span class="icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                    fill="currentColor">
+                    <path
+                      d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                  </svg>
+                </span>
+              </a>
+              <a href="https://github.com/NoaVelasco" aria-label="GitHub">
+                <span class="icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                    fill="currentColor">
+                    <path
+                      d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+                  </svg>
+                </span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+</body>
+
+</html>

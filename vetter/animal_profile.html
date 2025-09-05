@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Perfil de Yin</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400..900;1,400..900&display=swap');
+  </style>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"> -->
+  <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"> -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.19/index.global.min.js'></script>
+</head>
+
+<body>
+  <nav class="navbar is-primary is-fullwidth has-shadow" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+      <a class="navbar-item brand-menu tipo-bold" href="index.html">
+        VETTER
+      </a>
+
+      <a class="navbar-burger" role="button" aria-label="menu" aria-expanded="false" data-target="navMenu">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    </div>
+    <div class="navbar-menu" id="navMenu">
+      <div class="navbar-start">
+        <a class="navbar-item" href="./profile.html">
+          Mi perfil
+        </a>
+      </div>
+      <div class="navbar-end">
+        <div class="navbar-item">
+          <div class="buttons">
+            <a class="button is-small is-light">
+              Salir
+            </a>
+            <!--             <a class="button is-small is-link" href="profile.html">
+              <strong>Entrar</strong>
+            </a> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- 
+  MARK: Perfil
+-->
+
+
+  <section class="section pt-4 bg-primary-3">
+    <div class="container">
+      <div class="columns is-variable is-8-desktop is-4-tablet is-2-mobile is-vcentered is-mobile">
+        <!-- Columna 1: Foto de perfil con marco circular -->
+        <div class="column is-2-desktop is-2-tablet is-3-mobile">
+          <figure class="image">
+            <img class="is-rounded profile-image-with-halo" src="src/Yin.jpg" alt="Foto de perfil">
+          </figure>
+        </div>
+
+        <!-- Columna 2: Nombre y datos de contacto -->
+        <div class="column is-9-desktop is-8-tablet is-7-mobile">
+          <h1 class="title is-3 is-4-mobile is-5-mobile-xs mb-2">Yin</h1>
+          <div class="content">
+            <p class="is-flex mb-0">
+
+              <span class="is-size-6"><strong>Gato</strong></span>
+            </p>
+            <p class="is-flex">
+              <span class="is-size-6 is-size-7-mobile truncate-mobile">Común europeo</span>
+            </p>
+          </div>
+        </div>
+
+        <!-- Columna 3: Iconos de editar y compartir -->
+        <div class="column is-1-desktop is-2-tablet is-2-mobile has-text-right pr-2">
+          <div class="is-flex is-flex-direction-column is-align-items-flex-end is-justify-content-start">
+            <a class="icon has-text-primary mb-3" title="Editar perfil">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+              </svg>
+            </a>
+            <a class="icon has-text-link" title="Compartir perfil">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="18" cy="5" r="3"></circle>
+                <circle cx="6" cy="12" r="3"></circle>
+                <circle cx="18" cy="19" r="3"></circle>
+                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container mt-5">
+      <p class="is-flex mb-0"><span class="is-size-6 is-size-7-mobile"><strong>Edad</strong>: 18 años</span></p>
+      <p class="is-flex mb-0"><span class="is-size-6 is-size-7-mobile"><strong>Esterilizado</strong>: Sí</span></p>
+      <p class="is-flex mb-0"><span class="is-size-6 is-size-7-mobile"><strong>Sexo</strong>: V</span></p>
+    </div>
+    <!--               <div class="content">
+                <p class="is-flex mb-0">
+              
+                  <span class="is-size-6 is-size-7-mobile"><strong>Gato</strong></span>
+                </p>
+                <p class="is-flex">
+                  <span class="is-size-6 is-size-7-mobile truncate-mobile">Común europeo</span>
+                </p>
+              </div> -->
+  </section>
+
+  <!-- 
+  MARK: Tabs
+-->
+  <div class="tabs is-boxed is-centered is-fullwidth bg-primary-3">
+    <ul>
+      <li class="is-active" data-tab="tab-perfil">
+        <a>
+          <span class="material-icons mr-1">pets</span>
+          <span>Perfil</span>
+        </a>
+      </li>
+      <li data-tab="tab-ficha-medica">
+        <a>
+          <span class="material-icons mr-1">health_and_safety</span>
+          <span>Ficha médica</span>
+        </a>
+      </li>
+      <li data-tab="tab-relaciones">
+        <a>
+          <span class="material-icons mr-1">waving_hand</span>
+          <span>Relaciones</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <!-- 
+MARK: Perfil
+ -->
+  <div id="tab-perfil" class="tab-content">
+    <section class="section">
+      <div class="container">
+        <div class="columns is-multiline">
+          <!-- Tarjeta Dieta -->
+          <div class="column is-6-desktop is-12-tablet">
+            <div class="card is-fullwidth with-halo">
+              <div class="card-content">
+                <div class="media">
+                  <div class="media-left">
+                    <span class="icon is-large has-text-primary">
+                      <i class="material-icons" style="font-size: 2.5rem;">fingerprint</i>
+                    </span>
+                  </div>
+                  <div class="media-content">
+                    <p class="title is-4">Cómo soy</p>
+                    <p class="subtitle is-6">Naranja claro. Colmillo superior derecho partido. Blanco en orejas, punta
+                      de la cola y barriguita.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Tarjeta Comportamiento -->
+          <div class="column is-6-desktop is-12-tablet">
+            <div class="card is-fullwidth with-halo">
+              <div class="card-content">
+                <div class="media">
+                  <div class="media-left">
+                    <span class="icon is-large has-text-primary">
+                      <i class="material-icons" style="font-size: 2.5rem;">psychology</i>
+                    </span>
+                  </div>
+                  <div class="media-content">
+                    <p class="title is-4">Comportamiento</p>
+                    <p class="subtitle is-6">Tranquilo y cariñoso. Tímido con desconocidos. Se asusta con facilidad.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Tarjeta Dieta -->
+          <div class="column is-6-desktop is-12-tablet">
+            <div class="card is-fullwidth with-halo">
+              <div class="card-content">
+                <div class="media">
+                  <div class="media-left">
+                    <span class="icon is-large has-text-primary">
+                      <i class="material-icons" style="font-size: 2.5rem;">restaurant</i>
+                    </span>
+                  </div>
+                  <div class="media-content">
+                    <p class="title is-4">Dieta</p>
+                    <p class="subtitle is-6">80 gr. pienso hipoalergénico senior;
+                      3 premios líquidos al día y sobres de comida húmeda si tiene hambre.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tarjeta Rutinas -->
+          <div class="column is-6-desktop is-12-tablet">
+            <div class="card is-fullwidth with-halo">
+              <div class="card-content">
+                <div class="media">
+                  <div class="media-left">
+                    <span class="icon is-large has-text-primary">
+                      <i class="material-icons" style="font-size: 2.5rem;">schedule</i>
+                    </span>
+                  </div>
+                  <div class="media-content">
+                    <p class="title is-4">Rutinas</p>
+                    <p class="subtitle is-6">Duerme en la cama de 1 a 7 h.
+                      En invierno también durante el día. En verano pasa el día en el exterior.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+          <!-- Tarjeta Preferencias -->
+          <div class="column is-6-desktop is-12-tablet">
+            <div class="card is-fullwidth with-halo">
+              <div class="card-content">
+                <div class="media">
+                  <div class="media-left">
+                    <span class="icon is-large has-text-primary">
+                      <i class="material-icons" style="font-size: 2.5rem;">favorite</i>
+                    </span>
+                  </div>
+                  <div class="media-content">
+                    <p class="title is-4">Me gusta...</p>
+                    <p class="subtitle is-6">Dormir al sol y comerme las plantas.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tarjeta Galería de imágenes -->
+          <div class="column is-6-desktop is-12-tablet">
+            <div class="card is-fullwidth with-halo">
+              <div class="card-content">
+                <div class="media">
+                  <div class="media-left">
+                    <span class="icon is-large has-text-primary">
+                      <i class="material-icons" style="font-size: 2.5rem;">photo_library</i>
+                    </span>
+                  </div>
+                  <div class="media-content">
+                    <p class="title is-4">Galería de imágenes</p>
+                    <div class="image-gallery mt-3">
+                      <div class="gallery-item">
+                        <img src="src/Yin-g-1.jpg" alt="Yin foto 1" class="gallery-img">
+                      </div>
+                      <div class="gallery-item">
+                        <img src="src/Yin-g-2.jpg" alt="Yin foto 2" class="gallery-img">
+                      </div>
+                      <div class="gallery-item">
+                        <img src="src/Yin-g-3.jpg" alt="Yin foto 3" class="gallery-img">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- 
+MARK: Ficha
+ -->
+  <div id="tab-ficha-medica" class="tab-content is-active">
+    <section class="section">
+      <div class="container">
+        <div class="columns is-multiline">
+          <!-- Tarjeta Número de Chip -->
+          <div class="column is-6-desktop is-12-tablet">
+            <div class="card is-fullwidth with-halo">
+              <div class="card-content">
+                <div class="media">
+                  <div class="media-left">
+                    <span class="icon is-large has-text-warning">
+                      <i class="material-icons" style="font-size: 2.5rem;">memory</i>
+                    </span>
+                  </div>
+                  <div class="media-content">
+                    <p class="title is-4">Número de chip</p>
+                    <p class="subtitle is-6">941000022334455</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Tarjeta Alergias y Cuidados -->
+          <div class="column is-6-desktop is-12-tablet">
+            <div class="card is-fullwidth with-halo">
+              <div class="card-content">
+                <div class="media">
+                  <div class="media-left">
+                    <span class="icon is-large has-text-danger">
+                      <i class="material-icons" style="font-size: 2.5rem;">warning</i>
+                    </span>
+                  </div>
+                  <div class="media-content">
+                    <p class="title is-4">Alergias y cuidados</p>
+                    <p class="subtitle is-6">Antecedentes de asma. Artrosis, le duelen las patas delanteras.
+                      Insuficiencia renal leve. Le sientan mal los lácteos.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tarjeta Enfermedades contagiosas -->
+          <div class="column is-6-desktop is-12-tablet">
+            <div class="card is-fullwidth with-halo">
+              <div class="card-content">
+                <div class="media">
+                  <div class="media-left">
+                    <span class="icon is-large has-text-danger">
+                      <i class="material-icons" style="font-size: 2.5rem;">coronavirus</i>
+                    </span>
+                  </div>
+                  <div class="media-content">
+                    <p class="title is-4">Enfermedades contagiosas</p>
+                    <p class="subtitle is-6">Ninguna. 😊</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <!-- Tarjeta Vacunas -->
+          <div class="column is-6-desktop is-12-tablet">
+            <div class="card is-fullwidth with-halo">
+              <div class="card-content">
+                <div class="media">
+                  <div class="media-left">
+                    <span class="icon is-large has-text-success">
+                      <i class="material-icons" style="font-size: 2.5rem;">vaccines</i>
+                    </span>
+                  </div>
+                  <div class="media-content">
+                    <p class="title is-4">Vacunas</p>
+                    <p class="subtitle is-6">Trivalente felina (15/06/2025). Próxima: 15/06/2025</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tarjeta Medicación -->
+          <div class="column is-6-desktop is-12-tablet">
+            <div class="card is-fullwidth with-halo">
+              <div class="card-content">
+                <div class="media">
+                  <div class="media-left">
+                    <span class="icon is-large has-text-link">
+                      <i class="material-icons" style="font-size: 2.5rem;">medication</i>
+                    </span>
+                  </div>
+                  <div class="media-content">
+                    <p class="title is-4">Medicación</p>
+                    <p class="subtitle is-6">Semintra, 1 ml/día. Solensia una vez al mes.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <!-- Tarjeta Visitas veterinario -->
+          <div class="column is-6-desktop is-12-tablet">
+            <div class="card is-fullwidth with-halo">
+              <div class="card-content">
+                <div class="media">
+                  <div class="media-left">
+                    <span class="icon is-large has-text-primary">
+                      <i class="material-icons" style="font-size: 2.5rem;">medical_services</i>
+                    </span>
+                  </div>
+                  <div class="media-content">
+                    <p class="title is-4">Visitas veterinario</p>
+                    <p class="subtitle is-6">Última: 03/09/2025 - Próxima: 03/10/2025</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Tarjeta Peso -->
+          <div class="column is-6-desktop is-12-tablet">
+            <div class="card is-fullwidth with-halo">
+              <div class="card-content">
+                <div class="media">
+                  <div class="media-left">
+                    <span class="icon is-large has-text-info">
+                      <i class="material-icons" style="font-size: 2.5rem;">monitor_weight</i>
+                    </span>
+                  </div>
+                  <div class="media-content">
+                    <p class="title is-4">Peso</p>
+                    <p class="subtitle is-6">4.5 kg (Último control: 23/07/2025)</p>
+                    <div>
+                      <canvas id="myChart"></canvas>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Tarjeta Calendario -->
+          <div class="column is-6-desktop is-12-tablet">
+            <div class="card is-fullwidth with-halo">
+              <div class="card-content">
+                <div class="media">
+                  <div class="media-left">
+                    <span class="icon is-large has-text-info">
+                      <i class="material-icons" style="font-size: 2.5rem;">calendar_month</i>
+                    </span>
+                  </div>
+                  <div class="media-content">
+                    <p class="title is-4">Calendario</p>
+                    <p class="subtitle is-6">Vacuna: 15/06/2025</p>
+                    <div id='calendar'></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tarjeta Notas -->
+          <div class="column is-6-desktop is-12-tablet">
+            <div class="card is-fullwidth with-halo">
+              <div class="card-content">
+                <div class="media">
+                  <div class="media-left">
+                    <span class="icon is-large has-text-grey">
+                      <i class="material-icons" style="font-size: 2.5rem;">note</i>
+                    </span>
+                  </div>
+                  <div class="media-content">
+                    <p class="title is-4">Notas</p>
+                    <p class="subtitle is-6">Ha presentado mejoras en la movilidad tras comenzar con Solensia. Vigilar
+                      posible deshidratación por problemas renales.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- 
+  MARK: Relaciones
+   -->
+  <div id="tab-relaciones" class="tab-content">
+    <section class="section">
+      <div class="container">
+
+        <!-- Categoría: Veterinarias -->
+        <h3 class="title is-4 mb-4">Veterinarias</h3>
+        <div class="columns is-multiline mb-6">
+          <!-- Tarjeta Clínica Patitas -->
+          <div class="column is-6-desktop is-12-tablet">
+            <div class="card is-fullwidth with-halo">
+              <div class="card-content">
+                <div class="media">
+                  <div class="media-left">
+                    <figure class="image is-48x48">
+                      <img class="is-rounded" src="src/pexels-tima-miroshnichenko-1by1-6235233.jpg"
+                        alt="Clínica Patitas">
+                    </figure>
+                  </div>
+                  <div class="media-content">
+                    <p class="title is-4">Clínica Patitas</p>
+                    <p class="subtitle is-6">Veterinario principal</p>
+                    <div class="content is-small">
+                      <p class="is-flex is-align-items-center mb-1">
+                        <span class="icon is-small mr-1">
+                          <i class="material-icons" style="font-size: 1rem;">call</i>
+                        </span>
+                        <span>91 543 21 09</span>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Categoría: Personas -->
+        <h3 class="title is-4 mb-4">Personas</h3>
+        <div class="columns is-multiline mb-6">
+          <!-- Tarjeta Jorge Martín -->
+          <div class="column is-6-desktop is-12-tablet">
+            <div class="card is-fullwidth with-halo">
+              <div class="card-content">
+                <div class="media">
+                  <div class="media-left">
+                    <figure class="image is-48x48">
+                      <img class="is-rounded" src="src/ben-den-engelsen-1by1-YUu9UAcOKZ4-unsplash.jpg"
+                        alt="Jorge Martín">
+                    </figure>
+                  </div>
+                  <div class="media-content">
+                    <p class="title is-4">Jorge Martín</p>
+                    <p class="subtitle is-6">Copropietario</p>
+                    <div class="content is-small">
+                      <p class="is-flex is-align-items-center">
+                        <span class="icon is-small mr-1">
+                          <i class="material-icons" style="font-size: 1rem;">call</i>
+                        </span>
+                        <span>678 901 234</span>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Categoría: Animales -->
+        <h3 class="title is-4 mb-4">Animales</h3>
+        <div class="columns is-multiline mb-5">
+          <!-- Tarjeta Akuma -->
+          <div class="column is-6-desktop is-12-tablet">
+            <div class="card is-fullwidth with-halo">
+              <div class="card-content">
+                <div class="media">
+                  <div class="media-left">
+                    <figure class="image is-48x48">
+                      <img class="is-rounded" src="src/mehdi-gholipour-1by1-oPwC8-CDXuI-unsplash.jpg" alt="Akuma">
+                    </figure>
+                  </div>
+                  <div class="media-content">
+                    <p class="title is-4">Akuma</p>
+                    <p class="subtitle is-6">Compañero de casa</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Botón para añadir relación -->
+        <div class="has-text-centered mt-6">
+          <button class="button is-primary">
+            <span class="icon">
+              <i class="material-icons">add</i>
+            </span>
+            <span>Añadir relación</span>
+          </button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- 
+  MARK: Footer
+   -->
+  <hr class="section-divider-2">
+
+  <footer class="footer">
+    <div class="container">
+      <div class="has-text-centered">
+        <p class="title is-5 tipo-bold mb-4">VETTER</p>
+        <div class="mb-5">
+          <a href="about.html" class="mr-4">Sobre mí</a>
+          <a href="contact.html">Contacto</a>
+        </div>
+
+        <hr class="my-5">
+
+        <div class="columns is-centered">
+          <div class="column is-narrow">
+            <p class="has-text-grey-light mb-3">© 2025 Noa Velasco. Todos los derechos reservados.</p>
+            <div>
+              <a href="https://www.linkedin.com/in/noavelasco/" class="mr-3" aria-label="LinkedIn">
+                <span class="icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                    fill="currentColor">
+                    <path
+                      d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                  </svg>
+                </span>
+              </a>
+              <a href="https://github.com/NoaVelasco" aria-label="GitHub">
+                <span class="icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                    fill="currentColor">
+                    <path
+                      d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+                  </svg>
+                </span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+</body>
+<!-- 
+MARK: Script
+ -->
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // Funcionalidad para navbar-burger
+    const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+    $navbarBurgers.forEach(el => {
+      el.addEventListener('click', () => {
+        const target = el.dataset.target;
+        const $target = document.getElementById(target);
+        el.classList.toggle('is-active');
+        $target.classList.toggle('is-active');
+      });
+    });
+
+    // Funcionalidad para las pestañas
+    const tabs = document.querySelectorAll('.tabs li');
+    const tabContents = document.querySelectorAll('.tab-content');
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        // Desactivar todas las pestañas
+        tabs.forEach(item => {
+          item.classList.remove('is-active');
+        });
+
+        // Desactivar todos los contenidos
+        tabContents.forEach(content => {
+          content.classList.remove('is-active');
+        });
+
+        // Activar la pestaña actual
+        tab.classList.add('is-active');
+
+        // Activar el contenido correspondiente
+        const tabId = tab.getAttribute('data-tab');
+        document.getElementById(tabId).classList.add('is-active');
+      });
+    });
+  });
+
+  const ctx = document.getElementById('myChart');
+  const labels = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio'];
+  const data = {
+    labels: labels,
+    datasets: [{
+      label: 'Peso en kg',
+      data: [5.2, 4.6, 4.2, 4.4, 4.3, 4.7, 4.5],
+      fill: true,
+      backgroundColor: 'rgba(75, 192, 192, 0.2)',
+      borderColor: 'rgb(75, 192, 192)',
+      tension: 0.1
+    }]
+  };
+  const config = {
+    type: 'line',
+    data: data,
+  };
+  new Chart(ctx, {
+    type: 'line',
+    data: data,
+    options: {
+      scales: {
+        y: {
+          beginAtZero: false
+        }
+      }
+    }
+  });
+
+
+  const today = new Date();
+
+  let eventToday = today.toISOString().split('T')[0];
+  let eventFuture = today.getFullYear() + '-' + 
+                    String(today.getMonth() + 1).padStart(2, '0') + '-' + 
+                    String(today.getDate() + 6).padStart(2, '0');
+
+  const events = [{ title: 'Pastilla', start: eventToday },
+  { title: 'Vacuna', start: eventFuture }
+  ];
+console.log(events);
+
+  document.addEventListener('DOMContentLoaded', function () {
+    var calendarEl = document.getElementById('calendar');
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+      timeZone: 'UTC',
+      locale: 'es',
+      initialView: 'dayGridMonth',
+      contentHeight: 400,
+      events: events
+      // events: 'https://fullcalendar.io/api/demo-feeds/events.json'
+
+    });
+    calendar.render();
+  });
+
+</script>
+
+</html>

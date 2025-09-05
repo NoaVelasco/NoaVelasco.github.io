@@ -1,0 +1,359 @@
+* {
+    --rich-black: #001713ff;
+    --darker-green: #00251fff;
+    --dark-green: #003830ff;
+    --pine-green: #077867ff;
+    --turquoise: #09caadff;
+    --aquamarine: #05ffdaff;
+
+    --blue-munsell: #428fa1ff;
+    --yinmn-blue: #2b4e8aff;
+    --tekhelet: #4e1d70ff;
+    --claret: #75203cff;
+    --olive: #928035ff;
+
+    --gris-b1: #404654ff;
+    --gris-b2: #2e333dff;
+    --gris-b3: #1f2229ff;
+    --blanco-b1: #abb1bfff;
+    --blanco-b2: #ebecf0ff;
+    --blanco-b3: #f9fafbff;
+}
+
+:root {
+    --bulma-family-primary: 'Schibsted Grotesk', sans-serif;
+    --bulma-family-secondary: 'Schibsted Grotesk', sans-serif;
+
+    /* Variables para tema claro (default) */
+    --shadow-color: rgba(0, 0, 0, .3);
+    --shadow-color-hover: rgba(0, 0, 0, 0.5);
+    --profile-shadow: 0 0 6px 2px rgba(0, 0, 0, 0.15);
+    --profile-halo: 0 0 0 4px white, 0 0 0 8px rgba(9, 202, 173, 0.3);
+    --profile-halo-hover: 0 0 0 4px white, 0 0 0 8px rgba(9, 202, 173, 0.5);
+    --bg-green-1: #09caadff;
+    --bg-green-2: #05ffdaff;
+    --bg-gray-1: #abb1bf;
+}
+
+/* Tema oscuro */
+@media (prefers-color-scheme: dark) {
+    :root {
+        /* Variables para tema oscuro */
+        --shadow-color: rgba(0, 0, 0, 0.5);
+        --shadow-color-hover: rgba(0, 0, 0, 0.7);
+        --profile-shadow: 0 0 10px 2px rgba(142, 230, 224, 0.25);
+        --profile-halo: 0 0 0 4px var(--gris-b3), 0 0 0 8px rgba(5, 255, 218, 0.4);
+        --profile-halo-hover: 0 0 0 4px var(--gris-b3), 0 0 0 8px rgba(5, 255, 218, 0.6);
+
+        --bg-green-1: #003830;
+        --bg-green-2: #077867;
+        --bg-gray-1: #2e333d;
+    }
+
+    /* Ajustes adicionales para modo oscuro */
+    body {
+        background-color: var(--gris-b3);
+        color: var(--blanco-b2);
+    }
+
+    .card {
+        background-color: var(--gris-b2);
+        color: var(--blanco-b2);
+    }
+
+    .section-divider {
+        background-color: var(--gris-b1);
+    }
+}
+
+body {
+    margin: 0;
+    /* font-family: "Schibsted Grotesk", sans-serif; */
+}
+
+.tipo-normal {
+    font-family: "Schibsted Grotesk", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.tipo-bold {
+    font-family: "Schibsted Grotesk", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 800;
+    font-style: normal;
+}
+
+.tipo-light {
+    font-family: "Schibsted Grotesk", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 200;
+    font-style: normal;
+}
+
+.brand-menu {
+    color: var(--rich-black);
+    font-weight: bold;
+    font-size: large;
+}
+
+.land-flex-2 {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: center;
+    gap: 10px;
+    padding: 20px;
+}
+
+.land-flex-col {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: start;
+    align-items: center;
+    gap: 10px;
+    padding: 20px;
+}
+
+.land-flex-3 {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: center;
+    gap: 10px;
+    padding: 20px;
+}
+
+.bg-primary-3 {
+    background-color: #05ffda33;
+}
+
+.bg-primary-2 {
+    background-color: #05ffda22;
+    /* color: var(--blanco-b3); */
+}
+
+.articulo {
+    /* background-color: var(--blanco-b3); */
+    /* width: 600px; */
+    max-width: 550px;
+    margin: 20px;
+    /* padding: 20px; */
+    /* font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; */
+}
+
+.pad-sp-above {
+    padding-top: 0.5em;
+}
+
+.pad-sp-under {
+    padding-bottom: 0.5em;
+}
+
+.pad-sp-above-large {
+    padding-top: 2.5em;
+}
+
+.pad-sp-under-large {
+    padding-bottom: 2.5em;
+}
+
+.mar-sp-above {
+    margin-top: 0.5em;
+}
+
+.mar-sp-under {
+    margin-bottom: 0.5em;
+}
+
+.mar-sp-above-large {
+    margin-top: 2.5em;
+}
+
+.mar-sp-under-large {
+    margin-bottom: 2.5em;
+}
+
+img.rounded {
+    border-radius: 8px;
+    box-shadow: 2px 2px 6px #00000055;
+    ;
+    max-width: 100%;
+    height: auto;
+}
+
+img.more-rounded {
+    border-radius: 50px;
+    /* box-shadow: var(--card-shadow); */
+    max-width: 100%;
+    height: auto;
+}
+
+/* Estilo para el halo de la imagen de perfil */
+/* .profile-image-with-halo {
+    box-shadow: var(--profile-shadow);
+    transition: box-shadow 0.3s ease;
+} */
+
+/* Hover effect para la imagen de perfil */
+.profile-image-with-halo {
+    box-shadow: var(--profile-halo-hover);
+}
+
+.with-halo {
+    /* box-shadow: var(--profile-halo); */
+    box-shadow: var(--profile-shadow);
+    transition: box-shadow 0.3s ease;
+}
+.with-halo:hover {
+    box-shadow: var(--profile-halo-hover);
+}
+
+/* Estilo para el separador entre secciones */
+.section-divider-1 {
+    height: 2px;
+    background-color: var(--pine-green);
+    box-shadow: var(--profile-shadow);
+    margin: 0;
+    padding: 0;
+}
+
+.section-divider-2 {
+    height: 2px;
+    background-color: var(--bg-gray-1);
+    box-shadow: var(--profile-shadow);
+    margin: 0;
+    padding: 0;
+}
+
+.footer {
+    padding-bottom: 1rem;
+}
+
+.bg-green-1 {
+    background: var(--bg-green-1);
+}
+
+.bg-green-2 {
+    background: var(--bg-green-2);
+}
+
+/* 
+MARK: Mediaqueries
+*/
+
+@media screen and (max-width: 768px) {
+    .truncate-mobile {
+        max-width: 150px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: inline-block;
+    }
+
+    /* Ajustes para pantallas pequeñas */
+    .image img {
+        width: 100% !important;
+        height: auto !important;
+    }
+
+    /* Reducir el tamaño de los iconos en móvil */
+    .icon svg {
+        width: 18px;
+        height: 18px;
+    }
+
+    /* Reducir aún más el tamaño del nombre en móvil */
+    .is-4-mobile {
+        font-size: 1.8rem !important;
+    }
+}
+
+@media screen and (max-width: 480px) {
+
+    /* Más reducciones para pantallas muy pequeñas */
+    .icon svg {
+        width: 16px;
+        height: 16px;
+    }
+
+    .is-4-mobile {
+        font-size: 1.4rem !important;
+    }
+}
+
+@media screen and (max-width: 375px) {
+    .is-5-mobile-xs {
+        font-size: 1.1rem !important;
+    }
+
+    .truncate-mobile {
+        max-width: 120px;
+    }
+
+    /* Aún más pequeños para dispositivos muy pequeños */
+    .icon svg {
+        width: 14px;
+        height: 14px;
+    }
+}
+
+/* Aumentar espacio horizontal entre foto y texto */
+@media screen and (min-width: 769px) {
+    .columns.is-variable.is-8-desktop {
+        --columnGap: 3rem;
+    }
+}
+
+/* Estilos para las tabs y su contenido */
+.tab-content {
+    display: none;
+    animation: fadeIn 0.3s ease;
+}
+
+.tab-content.is-active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Estilos para la galería de imágenes */
+.image-gallery {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.image-gallery .gallery-item {
+  flex: 0 0 33.333%;
+  height: auto;
+  padding: 0;
+}
+
+@media screen and (max-width: 768px) {
+  .image-gallery .gallery-item {
+    flex: 0 0 50%;
+  }
+}
+
+.image-gallery .gallery-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: filter 0.3s ease;
+}
+
+.image-gallery .gallery-img:hover {
+  filter: brightness(1.1);
+}
