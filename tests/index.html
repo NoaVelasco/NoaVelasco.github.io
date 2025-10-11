@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Examen de prueba</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <main class="container">
+      <header>
+        <h1>Examen de prueba</h1>
+        <p id="progreso">Cargando preguntas...</p>
+      </header>
+
+      <section id="pregunta-card" class="card hidden">
+        <h2 id="enunciado"></h2>
+        <ul id="opciones" class="opciones"></ul>
+      </section>
+
+      <div class="controls">
+        <button id="siguiente" class="btn" disabled>Siguiente</button>
+        <button id="finalizar" class="btn danger">Finalizar</button>
+      </div>
+
+      <div id="resultado" class="card hidden"></div>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>

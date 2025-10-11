@@ -1,0 +1,114 @@
+{
+  "preguntas": [
+    {
+      "numero": 1,
+      "enunciado": "¿Qué objetivo tiene el Acuerdo de París?",
+      "a": "Promover el comercio internacional entre países firmantes.",
+      "b": "Reducir emisiones y limitar el calentamiento global a menos de 2 °C.",
+      "c": "Aumentar la producción energética mediante combustibles fósiles.",
+      "d": "Fomentar el uso de energía nuclear en todos los países.",
+      "respuesta": "b",
+      "tema": "La sostenibilidad y su marco jurídico"
+    },
+    {
+      "numero": 2,
+      "enunciado": "¿Qué exige la Ley 11/2018 en España?",
+      "a": "Que todas las empresas reduzcan sus jornadas laborales a 35 horas semanales.",
+      "b": "Que las grandes empresas informen sobre aspectos medioambientales, sociales y de buen gobierno.",
+      "c": "Que las pymes publiquen sus beneficios trimestrales.",
+      "d": "Que las compañías solo informen sobre su impacto económico.",
+      "respuesta": "b",
+      "tema": "La sostenibilidad y su marco jurídico"
+    },
+    {
+      "numero": 3,
+      "enunciado": "¿Cuál es el propósito principal de la Agenda 2030 para el Desarrollo Sostenible?",
+      "a": "Incrementar el comercio internacional entre los países desarrollados.",
+      "b": "Establecer un marco global para erradicar la pobreza, proteger el planeta y garantizar el bienestar de todas las personas.",
+      "c": "Sustituir los acuerdos económicos internacionales previos.",
+      "d": "Limitar las políticas ambientales solo a los países industrializados.",
+      "respuesta": "b",
+      "tema": "La Agenda 2030 y los ODS"
+    },
+    {
+      "numero": 4,
+      "enunciado": "¿Qué objetivo de los ODS busca adoptar medidas urgentes para combatir el cambio climático y sus efectos?",
+      "a": "ODS 13: Acción por el clima.",
+      "b": "ODS 7: Energía asequible y no contaminante.",
+      "c": "ODS 15: Vida de ecosistemas terrestres.",
+      "d": "ODS 12: Producción y consumo responsables.",
+      "respuesta": "a",
+      "tema": "La Agenda 2030 y los ODS"
+    },
+    {
+      "numero": 5,
+      "enunciado": "¿Cuál de las siguientes acciones pertenece al principio de economía circular?",
+      "a": "Usar combustibles fósiles para reducir costes.",
+      "b": "Fabricar más productos desechables para aumentar ventas.",
+      "c": "Reparar, reciclar y reutilizar materiales para prolongar su vida útil.",
+      "d": "Sustituir a los trabajadores por máquinas automáticas.",
+      "respuesta": "c",
+      "tema": "Los aspectos ambientales, sociales y de gobernanza (ASG)"
+    },
+    {
+      "numero": 6,
+      "enunciado": "¿Qué aspecto se busca principalmente al promover la igualdad de género y la diversidad en una empresa?",
+      "a": "Reducir los costos operativos.",
+      "b": "Fomentar la innovación y la convivencia dentro de la organización.",
+      "c": "Evitar sanciones legales.",
+      "d": "Aumentar la competencia interna entre empleados.",
+      "respuesta": "b",
+      "tema": "Los aspectos ambientales, sociales y de gobernanza (ASG)"
+    },
+    {
+      "numero": 7,
+      "enunciado": "¿Qué significa aplicar la transparencia en la gestión dentro de una organización?",
+      "a": "Ocultar los errores financieros para proteger la imagen pública.",
+      "b": "Comunicar claramente cómo se toman decisiones y se usan los recursos.",
+      "c": "Permitir solo a los directivos acceder a la información interna.",
+      "d": "Publicar únicamente los resultados positivos.",
+      "respuesta": "b",
+      "tema": "Los aspectos ambientales, sociales y de gobernanza (ASG)"
+    },
+    {
+      "numero": 8,
+      "enunciado": "¿Cuál de las siguientes opciones describe mejor el papel de los stakeholders en la sostenibilidad empresarial?",
+      "a": "Son únicamente los accionistas de la empresa.",
+      "b": "Son los responsables de elaborar la normativa ambiental.",
+      "c": "Son los grupos o individuos que pueden influir en la empresa o verse afectados por sus decisiones.",
+      "d": "Son los clientes que adquieren productos sostenibles.",
+      "respuesta": "c",
+      "tema": "Los stakeholders y los criterios ASG"
+    },
+    {
+      "numero": 9,
+      "enunciado": "¿Por qué la participación de los stakeholders es clave en la gestión sostenible de una organización?",
+      "a": "Porque ayudan a detectar expectativas y riesgos, presionan para el cumplimiento de criterios de sostenibilidad y afectan a la reputación de la empresa.",
+      "b": "Porque definen los precios de los productos.",
+      "c": "Porque garantizan la rentabilidad inmediata de la empresa.",
+      "d": "Porque sustituyen a la dirección en la toma de decisiones.",
+      "respuesta": "a",
+      "tema": "Los stakeholders y los criterios ASG"
+    },
+    {
+      "numero": 10,
+      "enunciado": "¿Cuál es el propósito principal de los informes de sostenibilidad en una empresa?",
+      "a": "Aumentar la rentabilidad financiera.",
+      "b": "Promocionar productos en redes sociales.",
+      "c": "Comunicar el desempeño en aspectos ambientales, sociales y de gobernanza.",
+      "d": "Sustituir los informes contables tradicionales.",
+      "respuesta": "c",
+      "tema": "La medición de la sostenibilidad"
+    },
+    {
+      "numero": 11,
+      "enunciado": "¿Qué norma internacional establece los requisitos para un sistema de gestión ambiental?",
+      "a": "ISO 26000.",
+      "b": "SASB.",
+      "c": "GRI.",
+      "d": "ISO 14001.",
+      "respuesta": "d",
+      "tema": "La medición de la sostenibilidad"
+    }
+  ]
+}
