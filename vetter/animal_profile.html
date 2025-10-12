@@ -53,12 +53,12 @@
   </nav>
 
   <!-- 
-  MARK: Perfil
+  MARK: Datos
 -->
 
 
   <section class="section pt-4 bg-primary-3">
-    <div class="container">
+    <div class="container mt-4">
       <div class="columns is-variable is-8-desktop is-4-tablet is-2-mobile is-vcentered is-mobile">
         <!-- Columna 1: Foto de perfil con marco circular -->
         <div class="column is-2-desktop is-2-tablet is-3-mobile">
@@ -84,7 +84,7 @@
         <!-- Columna 3: Iconos de editar y compartir -->
         <div class="column is-1-desktop is-2-tablet is-2-mobile has-text-right pr-2">
           <div class="is-flex is-flex-direction-column is-align-items-flex-end is-justify-content-start">
-            <a class="icon has-text-primary mb-3" title="Editar perfil">
+            <a class="icon has-text-primary mb-3" title="Editar perfil" href="edit_animal_profile.html">
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
@@ -111,7 +111,7 @@
       <p class="is-flex mb-0"><span class="is-size-6 is-size-7-mobile"><strong>Sexo</strong>: V</span></p>
     </div>
     <!--               <div class="content">
-                <p class="is-flex mb-0">
+                <p class="is-flex mb-0>
               
                   <span class="is-size-6 is-size-7-mobile"><strong>Gato</strong></span>
                 </p>
@@ -127,19 +127,19 @@
   <div class="tabs is-boxed is-centered is-fullwidth bg-primary-3">
     <ul>
       <li class="is-active" data-tab="tab-perfil">
-        <a>
+        <a href="#perfil">
           <span class="material-icons mr-1">pets</span>
           <span>Perfil</span>
         </a>
       </li>
       <li data-tab="tab-ficha-medica">
-        <a>
+        <a href="#ficha-medica">
           <span class="material-icons mr-1">health_and_safety</span>
           <span>Ficha médica</span>
         </a>
       </li>
       <li data-tab="tab-relaciones">
-        <a>
+        <a href="#relaciones">
           <span class="material-icons mr-1">waving_hand</span>
           <span>Relaciones</span>
         </a>
@@ -156,7 +156,7 @@ MARK: Perfil
         <div class="columns is-multiline">
           <!-- Tarjeta Dieta -->
           <div class="column is-6-desktop is-12-tablet">
-            <div class="card is-fullwidth with-halo">
+            <div class="card is-fullwidth with-halo" data-editable-simple="true">
               <div class="card-content">
                 <div class="media">
                   <div class="media-left">
@@ -175,7 +175,7 @@ MARK: Perfil
           </div>
           <!-- Tarjeta Comportamiento -->
           <div class="column is-6-desktop is-12-tablet">
-            <div class="card is-fullwidth with-halo">
+            <div class="card is-fullwidth with-halo" data-editable-simple="true">
               <div class="card-content">
                 <div class="media">
                   <div class="media-left">
@@ -193,7 +193,7 @@ MARK: Perfil
           </div>
           <!-- Tarjeta Dieta -->
           <div class="column is-6-desktop is-12-tablet">
-            <div class="card is-fullwidth with-halo">
+            <div class="card is-fullwidth with-halo" data-editable-simple="true">
               <div class="card-content">
                 <div class="media">
                   <div class="media-left">
@@ -213,7 +213,7 @@ MARK: Perfil
 
           <!-- Tarjeta Rutinas -->
           <div class="column is-6-desktop is-12-tablet">
-            <div class="card is-fullwidth with-halo">
+            <div class="card is-fullwidth with-halo" data-editable-simple="true">
               <div class="card-content">
                 <div class="media">
                   <div class="media-left">
@@ -235,7 +235,7 @@ MARK: Perfil
 
           <!-- Tarjeta Preferencias -->
           <div class="column is-6-desktop is-12-tablet">
-            <div class="card is-fullwidth with-halo">
+            <div class="card is-fullwidth with-halo" data-editable-simple="true">
               <div class="card-content">
                 <div class="media">
                   <div class="media-left">
@@ -254,7 +254,7 @@ MARK: Perfil
 
           <!-- Tarjeta Galería de imágenes -->
           <div class="column is-6-desktop is-12-tablet">
-            <div class="card is-fullwidth with-halo">
+            <div class="card is-fullwidth with-halo" data-editable-simple="false">
               <div class="card-content">
                 <div class="media">
                   <div class="media-left">
@@ -280,6 +280,8 @@ MARK: Perfil
               </div>
             </div>
           </div>
+
+          <!-- Fin tarjetas -->
         </div>
       </div>
     </section>
@@ -294,7 +296,7 @@ MARK: Ficha
         <div class="columns is-multiline">
           <!-- Tarjeta Número de Chip -->
           <div class="column is-6-desktop is-12-tablet">
-            <div class="card is-fullwidth with-halo">
+            <div class="card is-fullwidth with-halo" data-editable-simple="true">
               <div class="card-content">
                 <div class="media">
                   <div class="media-left">
@@ -312,7 +314,7 @@ MARK: Ficha
           </div>
           <!-- Tarjeta Alergias y Cuidados -->
           <div class="column is-6-desktop is-12-tablet">
-            <div class="card is-fullwidth with-halo">
+            <div class="card is-fullwidth with-halo" data-editable-simple="true">
               <div class="card-content">
                 <div class="media">
                   <div class="media-left">
@@ -332,7 +334,7 @@ MARK: Ficha
 
           <!-- Tarjeta Enfermedades contagiosas -->
           <div class="column is-6-desktop is-12-tablet">
-            <div class="card is-fullwidth with-halo">
+            <div class="card is-fullwidth with-halo" data-editable-simple="true">
               <div class="card-content">
                 <div class="media">
                   <div class="media-left">
@@ -352,7 +354,7 @@ MARK: Ficha
 
           <!-- Tarjeta Vacunas -->
           <div class="column is-6-desktop is-12-tablet">
-            <div class="card is-fullwidth with-halo">
+            <div class="card is-fullwidth with-halo" data-editable-simple="true">
               <div class="card-content">
                 <div class="media">
                   <div class="media-left">
@@ -371,7 +373,7 @@ MARK: Ficha
 
           <!-- Tarjeta Medicación -->
           <div class="column is-6-desktop is-12-tablet">
-            <div class="card is-fullwidth with-halo">
+            <div class="card is-fullwidth with-halo" data-editable-simple="true">
               <div class="card-content">
                 <div class="media">
                   <div class="media-left">
@@ -391,7 +393,7 @@ MARK: Ficha
 
           <!-- Tarjeta Visitas veterinario -->
           <div class="column is-6-desktop is-12-tablet">
-            <div class="card is-fullwidth with-halo">
+            <div class="card is-fullwidth with-halo" data-editable-simple="true">
               <div class="card-content">
                 <div class="media">
                   <div class="media-left">
@@ -409,7 +411,7 @@ MARK: Ficha
           </div>
           <!-- Tarjeta Peso -->
           <div class="column is-6-desktop is-12-tablet">
-            <div class="card is-fullwidth with-halo">
+            <div class="card is-fullwidth with-halo" data-editable-simple="false">
               <div class="card-content">
                 <div class="media">
                   <div class="media-left">
@@ -420,7 +422,7 @@ MARK: Ficha
                   <div class="media-content">
                     <p class="title is-4">Peso</p>
                     <p class="subtitle is-6">4.5 kg (Último control: 23/07/2025)</p>
-                    <div>
+                    <div class="chart-container">
                       <canvas id="myChart"></canvas>
                     </div>
                   </div>
@@ -430,7 +432,7 @@ MARK: Ficha
           </div>
           <!-- Tarjeta Calendario -->
           <div class="column is-6-desktop is-12-tablet">
-            <div class="card is-fullwidth with-halo">
+            <div class="card is-fullwidth with-halo" data-editable-simple="false">
               <div class="card-content">
                 <div class="media">
                   <div class="media-left">
@@ -450,7 +452,7 @@ MARK: Ficha
 
           <!-- Tarjeta Notas -->
           <div class="column is-6-desktop is-12-tablet">
-            <div class="card is-fullwidth with-halo">
+            <div class="card is-fullwidth with-halo" data-editable-simple="true">
               <div class="card-content">
                 <div class="media">
                   <div class="media-left">
@@ -486,7 +488,7 @@ MARK: Ficha
         <div class="columns is-multiline mb-6">
           <!-- Tarjeta Clínica Patitas -->
           <div class="column is-6-desktop is-12-tablet">
-            <div class="card is-fullwidth with-halo">
+            <div class="card is-fullwidth with-halo" data-editable-simple="false">
               <div class="card-content">
                 <div class="media">
                   <div class="media-left">
@@ -518,7 +520,7 @@ MARK: Ficha
         <div class="columns is-multiline mb-6">
           <!-- Tarjeta Jorge Martín -->
           <div class="column is-6-desktop is-12-tablet">
-            <div class="card is-fullwidth with-halo">
+            <div class="card is-fullwidth with-halo" data-editable-simple="false">
               <div class="card-content">
                 <div class="media">
                   <div class="media-left">
@@ -550,7 +552,7 @@ MARK: Ficha
         <div class="columns is-multiline mb-5">
           <!-- Tarjeta Akuma -->
           <div class="column is-6-desktop is-12-tablet">
-            <div class="card is-fullwidth with-halo">
+            <div class="card is-fullwidth with-halo" data-editable-simple="false">
               <div class="card-content">
                 <div class="media">
                   <div class="media-left">
@@ -570,12 +572,12 @@ MARK: Ficha
 
         <!-- Botón para añadir relación -->
         <div class="has-text-centered mt-6">
-          <button class="button is-primary">
+          <a class="button is-primary" href="add_relationship.html">
             <span class="icon">
               <i class="material-icons">add</i>
             </span>
             <span>Añadir relación</span>
-          </button>
+          </a>
         </div>
       </div>
     </section>
@@ -625,106 +627,211 @@ MARK: Ficha
       </div>
     </div>
   </footer>
-</body>
-<!-- 
-MARK: Script
- -->
+  <!-- 
+  MARK: Script
+   -->
 
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    // Funcionalidad para navbar-burger
-    const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
-    $navbarBurgers.forEach(el => {
-      el.addEventListener('click', () => {
-        const target = el.dataset.target;
-        const $target = document.getElementById(target);
-        el.classList.toggle('is-active');
-        $target.classList.toggle('is-active');
-      });
-    });
-
-    // Funcionalidad para las pestañas
-    const tabs = document.querySelectorAll('.tabs li');
-    const tabContents = document.querySelectorAll('.tab-content');
-
-    tabs.forEach(tab => {
-      tab.addEventListener('click', () => {
-        // Desactivar todas las pestañas
-        tabs.forEach(item => {
-          item.classList.remove('is-active');
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Funcionalidad para navbar-burger
+      const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+      $navbarBurgers.forEach(el => {
+        el.addEventListener('click', () => {
+          const target = el.dataset.target;
+          const $target = document.getElementById(target);
+          el.classList.toggle('is-active');
+          $target.classList.toggle('is-active');
         });
-
-        // Desactivar todos los contenidos
-        tabContents.forEach(content => {
-          content.classList.remove('is-active');
-        });
-
-        // Activar la pestaña actual
-        tab.classList.add('is-active');
-
-        // Activar el contenido correspondiente
-        const tabId = tab.getAttribute('data-tab');
-        document.getElementById(tabId).classList.add('is-active');
       });
-    });
-  });
 
-  const ctx = document.getElementById('myChart');
-  const labels = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio'];
-  const data = {
-    labels: labels,
-    datasets: [{
-      label: 'Peso en kg',
-      data: [5.2, 4.6, 4.2, 4.4, 4.3, 4.7, 4.5],
-      fill: true,
-      backgroundColor: 'rgba(75, 192, 192, 0.2)',
-      borderColor: 'rgb(75, 192, 192)',
-      tension: 0.1
-    }]
-  };
-  const config = {
-    type: 'line',
-    data: data,
-  };
-  new Chart(ctx, {
-    type: 'line',
-    data: data,
-    options: {
-      scales: {
-        y: {
-          beginAtZero: false
+      // Funcionalidad para las pestañas
+      const tabs = document.querySelectorAll('.tabs li');
+      const tabContents = document.querySelectorAll('.tab-content');
+      let calendar;
+
+      function initCalendar() {
+        if (calendar) {
+          calendar.updateSize();
+          return;
+        }
+
+        const today = new Date();
+
+        let eventToday = today.toISOString().split('T')[0];
+        let eventFuture = today.getFullYear() + '-' +
+          String(today.getMonth() + 1).padStart(2, '0') + '-' +
+          String(today.getDate() + 6).padStart(2, '0');
+
+        const events = [{ title: 'Pastilla', start: eventToday },
+        { title: 'Vacuna', start: eventFuture }
+        ];
+
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+          timeZone: 'UTC',
+          locale: 'es',
+          initialView: 'dayGridMonth',
+          contentHeight: 400,
+          events: events
+          // events: 'https://fullcalendar.io/api/demo-feeds/events.json'
+
+        });
+        calendar.render();
+
+        setTimeout(() => {
+          calendar.updateSize();
+        }, 100);
+      }
+
+      // Función para activar pestaña según el hash de la URL
+      function activateTabFromHash() {
+        if (location.hash) {
+          let tabId = '';
+          
+          // Convertir el hash en el id de la pestaña
+          switch(location.hash.substring(1)) {
+            case 'perfil':
+              tabId = 'tab-perfil';
+              break;
+            case 'ficha-medica':
+              tabId = 'tab-ficha-medica';
+              break;
+            case 'relaciones':
+              tabId = 'tab-relaciones';
+              break;
+            default:
+              return; // Si no coincide con ninguna pestaña, no hacer nada
+          }
+          
+          // Encontrar la pestaña y activarla
+          const targetTab = document.querySelector(`.tabs li[data-tab="${tabId}"]`);
+          if (targetTab) {
+            // Desactivar todas las pestañas
+            tabs.forEach(item => {
+              item.classList.remove('is-active');
+            });
+
+            // Desactivar todos los contenidos
+            tabContents.forEach(content => {
+              content.classList.remove('is-active');
+            });
+
+            // Activar la pestaña objetivo
+            targetTab.classList.add('is-active');
+            document.getElementById(tabId).classList.add('is-active');
+            
+            // Si es la pestaña de ficha médica, inicializar el calendario
+            if (tabId === 'tab-ficha-medica') {
+              initCalendar();
+            }
+          }
         }
       }
-    }
-  });
+      
+      // Activar la pestaña según el hash cuando se carga la página
+      activateTabFromHash();
+      
+      // También escuchar cambios en el hash (por si se navega con el botón atrás/adelante)
+      window.addEventListener('hashchange', activateTabFromHash);
 
-
-  const today = new Date();
-
-  let eventToday = today.toISOString().split('T')[0];
-  let eventFuture = today.getFullYear() + '-' + 
-                    String(today.getMonth() + 1).padStart(2, '0') + '-' + 
-                    String(today.getDate() + 6).padStart(2, '0');
-
-  const events = [{ title: 'Pastilla', start: eventToday },
-  { title: 'Vacuna', start: eventFuture }
-  ];
-console.log(events);
-
-  document.addEventListener('DOMContentLoaded', function () {
-    var calendarEl = document.getElementById('calendar');
-    var calendar = new FullCalendar.Calendar(calendarEl, {
-      timeZone: 'UTC',
-      locale: 'es',
-      initialView: 'dayGridMonth',
-      contentHeight: 400,
-      events: events
-      // events: 'https://fullcalendar.io/api/demo-feeds/events.json'
-
+      // Click en pestañas actualiza hash y activa pestaña
+      tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          // No necesitamos duplicar la lógica de activación aquí
+          // ya que el cambio de hash provocará que se llame a activateTabFromHash
+        });
+      });
     });
-    calendar.render();
+
+    const ctx = document.getElementById('myChart');
+    const labels = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio'];
+    const data = {
+      labels: labels,
+      datasets: [{
+        label: 'Peso en kg',
+        data: [5.2, 4.6, 4.2, 4.4, 4.3, 4.7, 4.5],
+        fill: true,
+        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+        borderColor: 'rgb(75, 192, 192)',
+        tension: 0.1
+      }]
+    };
+
+    new Chart(ctx, {
+      type: 'line',
+      data: data,
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        resizeDelay: 200,
+        scales: {
+          y: {
+            beginAtZero: false
+          }
+        }
+      }
+    });
+
+
+
+
+  // Al hacer clic en una tarjeta
+  document.querySelectorAll('.card.with-halo[data-editable-simple="true"]').forEach(card => {
+    card.addEventListener('click', function () {
+      // Obtener el contenido actual
+      const title = this.querySelector('.title').textContent;
+      const content = this.querySelector('.subtitle').textContent.replace(/\n/g, '').replace(/\s+/g, ' ').trim();
+
+      // Mostrar modal con formulario
+      activateEditModal(title, content);
+    });
   });
 
-</script>
+  function activateEditModal(title, content) {
+    // Crear modal con Bulma
+    const modal = document.createElement('div');
+    modal.className = 'modal is-active';
+    modal.innerHTML = `
+    <div class="modal-background"></div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">Editar ${title}</p>
+        <button class="delete" aria-label="close"></button>
+      </header>
+      <section class="modal-card-body">
+        <div class="field">
+
+        </div>
+        <div class="field">
+          <label class="label">Contenido</label>
+          <div class="control">
+            <textarea class="textarea">${content}</textarea>
+          </div>
+        </div>
+      </section>
+      <footer class="modal-card-foot">
+        <button class="button is-primary">Guardar</button>
+        <button class="button" id="cancelar-modal">Cancelar</button>
+      </footer>
+    </div>
+  `;
+
+    document.body.appendChild(modal);
+
+    // Manejar cierre del modal
+    modal.querySelector('.delete').addEventListener('click', () => {
+      modal.classList.remove('is-active');
+      setTimeout(() => modal.remove(), 300);
+    });
+    // Manejar cierre del modal
+    modal.querySelector('#cancelar-modal').addEventListener('click', () => {
+      modal.classList.remove('is-active');
+      setTimeout(() => modal.remove(), 300);
+    });
+  }
+
+
+  </script>
+</body>
 
 </html>

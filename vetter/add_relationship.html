@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Añadir relación</title>
+	<style>
+		@import url('https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400..900;1,400..900&display=swap');
+	</style>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
+	<link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+	<nav class="navbar is-primary is-fullwidth has-shadow" role="navigation" aria-label="main navigation">
+		<div class="navbar-brand">
+			<a class="navbar-item brand-menu tipo-bold" href="index.html">
+				VETTER
+			</a>
+
+			<a class="navbar-burger" role="button" aria-label="menu" aria-expanded="false" data-target="navMenu">
+				<span aria-hidden="true"></span>
+				<span aria-hidden="true"></span>
+				<span aria-hidden="true"></span>
+				<span aria-hidden="true"></span>
+			</a>
+		</div>
+		<div class="navbar-menu" id="navMenu">
+			<div class="navbar-start">
+				<a class="navbar-item" href="./profile.html">
+					Mi perfil
+				</a>
+			</div>
+			<div class="navbar-end">
+				<div class="navbar-item">
+					<div class="buttons">
+						<a class="button is-small is-light">
+							Salir
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</nav>
+
+	<section class="section mt-4 pt-4">
+		<div class="container">
+			<!-- Cabecera con título y flecha para volver -->
+			<div class="columns is-mobile mb-2">
+				<div class="column is-2 has-text-left">
+					<a href="animal_profile.html#relaciones" class="icon is-medium has-text-grey">
+						<i class="material-icons" style="font-size: 1.75rem;">arrow_back</i>
+					</a>
+				</div>
+				<div class="column is-8 has-text-centered">
+					<h1 class="title is-3-desktop is-4-mobile">Añadir relación</h1>
+				</div>
+				<div class="column is-2 has-text-right">
+					<a class="icon is-medium has-text-danger">
+						<i class="material-icons" style="font-size: 1.75rem;">delete</i>
+					</a>
+				</div>
+			</div>
+
+			<!-- Imagen de perfil con opción de editar -->
+			<div class="columns is-centered mb-5">
+				<div class="column is-narrow has-text-centered">
+					<div class="position-relative">
+						<figure class="image is-128x128 mx-auto">
+							<img class="is-rounded" src="src/ben-den-engelsen-1by1-YUu9UAcOKZ4-unsplash.jpg" alt="Foto de perfil">
+							<div class="edit-photo-icon">
+								<span class="icon has-background-primary has-text-white is-rounded">
+									<i class="material-icons">photo_camera</i>
+								</span>
+							</div>
+						</figure>
+					</div>
+				</div>
+			</div>
+
+			<!-- Formulario -->
+			<div class="columns mt-5 is-centered">
+				<div class="column is-6-desktop is-8-tablet">
+					<form>
+
+						<div class="field">
+							<label class="label">Relación</label>
+							<div class="control select is-fullwidth">
+								<select>
+									<option>Propietario</option>
+									<option>Veterinaria</option>
+									<!-- <option>Animal</option> -->
+									<option>No especificado</option>
+								</select>
+							</div>
+						</div>
+
+						<!-- Campo Nombre -->
+						<div class="field">
+							<label class="label">Nombre</label>
+							<div class="control">
+								<input class="input" type="text" placeholder="Nombre completo" value="Jorge García">
+							</div>
+						</div>
+
+						<!-- Campo Teléfono -->
+						<div class="field mt-4">
+							<label class="label">Teléfono de contacto</label>
+							<div class="control has-icons-left">
+								<input class="input" type="tel" value="666 777 888">
+								<span class="icon is-small is-left">
+									<i class="material-icons">phone</i>
+								</span>
+							</div>
+						</div>
+
+						<!-- Campo Email -->
+						<div class="field">
+							<label class="label">Correo de contacto</label>
+							<div class="control has-icons-left">
+								<input class="input" type="email" value="jorge.garcia@ejemplo.com">
+								<span class="icon is-small is-left">
+									<i class="material-icons">email</i>
+								</span>
+							</div>
+						</div>
+
+						<div class="field mt-4">
+							<label class="label">Dirección</label>
+							<div class="control has-icons-left">
+								<input class="input" type="text" value="calle Falsa, 123. Madrid">
+								<span class="icon is-small is-left">
+									<i class="material-icons">house</i>
+								</span>
+							</div>
+						</div>
+
+						<div class="notification is-info is-light mt-4">
+							<div class="is-flex is-align-items-center mb-2">
+								<span class="icon mr-2">
+									<i class="material-icons">info</i>
+								</span>
+								<strong>Información de privacidad:</strong>
+							</div>
+							<div class="content">
+								<p>
+									Si relacionas este contacto a una de tus mascotas, estos datos de contacto estarán disponibles para 
+									aquellos usuarios con los que compartas la ficha de esa mascota.
+									Si quieres compartirla con otras personas y no tienes permiso para compartir estos datos,
+									te recomendamos que hagas una de las siguientes cosas:
+									<ul>
+										<li>No rellenes estos datos personales y podrás compartir todo lo demás.</li>
+										<li>Consigue el consentimiento y podrás compartir sin problema.</li>
+									</ul>
+								</p>
+							</div>
+						</div>
+
+
+						<!-- Botón guardar -->
+						<div class="field mt-6 is-grouped is-grouped-centered">
+							<div class="control">
+								<button class="button is-primary">Guardar cambios</button>
+							</div>
+						</div>
+
+					</form>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<style>
+		.position-relative {
+			position: relative;
+		}
+
+		.edit-photo-icon {
+			position: absolute;
+			bottom: 0;
+			right: 0;
+			cursor: pointer;
+		}
+
+		.edit-photo-icon .icon {
+			border-radius: 50%;
+			padding: 8px;
+			box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+		}
+	</style>
+
+	<script>
+		document.addEventListener('DOMContentLoaded', () => {
+			// Funcionalidad para navbar-burger
+			const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+			$navbarBurgers.forEach(el => {
+				el.addEventListener('click', () => {
+					const target = el.dataset.target;
+					const $target = document.getElementById(target);
+					el.classList.toggle('is-active');
+					$target.classList.toggle('is-active');
+				});
+			});
+		});
+	</script>
+</body>
+
+</html>

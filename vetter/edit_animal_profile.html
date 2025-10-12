@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Editar datos de mascota</title>
+	<style>
+		@import url('https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400..900;1,400..900&display=swap');
+	</style>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
+	<link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+	<nav class="navbar is-primary is-fullwidth has-shadow" role="navigation" aria-label="main navigation">
+		<div class="navbar-brand">
+			<a class="navbar-item brand-menu tipo-bold" href="index.html">
+				VETTER
+			</a>
+
+			<a class="navbar-burger" role="button" aria-label="menu" aria-expanded="false" data-target="navMenu">
+				<span aria-hidden="true"></span>
+				<span aria-hidden="true"></span>
+				<span aria-hidden="true"></span>
+				<span aria-hidden="true"></span>
+			</a>
+		</div>
+		<div class="navbar-menu" id="navMenu">
+			<div class="navbar-start">
+				<a class="navbar-item" href="./profile.html">
+					Mi perfil
+				</a>
+			</div>
+			<div class="navbar-end">
+				<div class="navbar-item">
+					<div class="buttons">
+						<a class="button is-small is-light">
+							Salir
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</nav>
+
+	<section class="section mt-4 pt-4">
+		<div class="container">
+			<!-- Cabecera con título y flecha para volver -->
+			<div class="columns is-mobile mb-2">
+				<div class="column is-2 has-text-left">
+					<a href="animal_profile.html" class="icon is-medium has-text-grey">
+						<i class="material-icons" style="font-size: 1.75rem;">arrow_back</i>
+					</a>
+				</div>
+				<div class="column is-8 has-text-centered">
+					<h1 class="title is-3-desktop is-4-mobile">Editar datos de mascota</h1>
+				</div>
+				<div class="column is-2 has-text-right">
+					<a class="icon is-medium has-text-danger">
+						<i class="material-icons" style="font-size: 1.75rem;">delete</i>
+					</a>
+				</div>
+			</div>
+
+			<!-- Imagen de perfil con opción de editar -->
+			<div class="columns is-centered mb-5">
+				<div class="column is-narrow has-text-centered">
+					<div class="position-relative">
+						<figure class="image is-128x128 mx-auto">
+							<img class="is-rounded" src="src/Yin.jpg" alt="Foto de perfil">
+							<div class="edit-photo-icon">
+								<span class="icon">
+									<i class="material-icons">photo_camera</i>
+								</span>
+							</div>
+						</figure>
+					</div>
+				</div>
+			</div>
+
+			<!-- Formulario -->
+			<div class="columns mt-5 is-centered">
+				<div class="column is-6-desktop is-8-tablet">
+					<form>
+						<!-- Campo Nombre -->
+						<div class="field">
+							<label class="label">Nombre de mascota *</label>
+							<div class="control">
+								<input class="input" type="text" value="Yin">
+							</div>
+						</div>
+
+
+						<div class="field">
+							<label class="label">Especie</label>
+							<div class="control select is-fullwidth">
+								<select>
+									<option>Gato</option>
+									<option>Perro</option>
+									<option>Roedor</option>
+									<option>Pájaro</option>
+									<option>Pez</option>
+									<option>Reptil</option>
+									<option>Tortuga</option>
+									<option>Erizo</option>
+									<option>Ave de corral</option>
+									<option>Caballo</option>
+									<option>Otro</option>
+								</select>
+							</div>
+						</div>
+
+						<div class="field">
+							<label class="label">Raza</label>
+							<div class="control">
+								<input class="input" type="text" value="Común europeo">
+
+							</div>
+						</div>
+
+						<div class="field">
+							<label class="label">Fecha de nacimiento</label>
+							<div class="control">
+								<input class="input" type="date" value="2007-07-15" min="1970-01-01" id="fecha_nac">
+							</div>
+						</div>
+
+						<div class="field">
+							<label class="label">Sexo</label>
+							<div class="control select is-fullwidth">
+								<select>
+									<option>No especificado</option>
+									<option>V</option>
+									<option>M</option>
+
+								</select>
+							</div>
+						</div>
+
+						<div class="field mt-5">
+							<label class="label">Esterilizada</label>
+							<div class="control">
+								<label class="radio">
+									<input type="radio" name="esteril" />
+									Sí
+								</label>
+								<label class="radio">
+									<input type="radio" name="esteril" />
+									No
+								</label>
+							</div>
+						</div>
+
+						<!-- Botón guardar -->
+						<div class="field mt-6 is-grouped is-grouped-centered">
+							<div class="control">
+								<button class="button is-primary">Guardar cambios</button>
+							</div>
+						</div>
+
+					</form>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<style>
+		.position-relative {
+			position: relative;
+		}
+
+		.edit-photo-icon {
+			position: absolute;
+			bottom: 0;
+			right: 0;
+			cursor: pointer;
+		}
+
+		.edit-photo-icon .icon {
+			border-radius: 50%;
+			padding: 8px;
+			box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+		}
+	</style>
+
+	<script>
+		document.addEventListener('DOMContentLoaded', () => {
+			// Funcionalidad para navbar-burger
+			const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+			$navbarBurgers.forEach(el => {
+				el.addEventListener('click', () => {
+					const target = el.dataset.target;
+					const $target = document.getElementById(target);
+					el.classList.toggle('is-active');
+					$target.classList.toggle('is-active');
+				});
+			});
+		});
+
+		document.addEventListener('DOMContentLoaded', function () {
+			// Obtener la fecha actual en formato YYYY-MM-DD
+			const hoy = new Date().toISOString().split('T')[0];
+
+			// Aplicar la restricción al campo de fecha de nacimiento
+			document.getElementById('fecha_nac').setAttribute('max', hoy);
+		});
+	</script>
+</body>
+
+</html>
