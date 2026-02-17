@@ -1,12 +1,14 @@
 # NoaVelasco.github.io
 
-> **Nota [250721]**  
-> Actualmente, la página principal solo muestra enlaces a LinkedIn y Github. Está previsto incluir un portfolio más detallado, pero de momento el repositorio está pensado especialmente para alojar el juego en desarrollo.
+> **Nota [260217]**  
+> Aunque está previsto incluir un portfolio más detallado, el repositorio está pensado especialmente para alojar el juego en desarrollo Gozzler y el frontend de aplicaciones web como Vetter.
 
 ## Gozzler
 Juego indie de puzles en 2D con una mecánica basada en la programación de movimientos.
 
 ![Gozzler](gozzler/src/Gozzler_250703-131439.jpg)
+
+[JUGAR](https://noave.me/gozzler)
 
 ### Etiquetas
 #casual #indie #2d #puzzle #pixel
